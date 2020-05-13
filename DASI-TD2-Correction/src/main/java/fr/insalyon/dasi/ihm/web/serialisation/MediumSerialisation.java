@@ -30,9 +30,11 @@ public class MediumSerialisation extends Serialisation {
         for(Medium m:liste_mediums) {
             if (m != null) {
                 JsonObject jsonMedium = new JsonObject();
-                jsonMedium.addProperty("id", m.getDenomination());
-                jsonMedium.addProperty("nom", m.getGenre().toString());
-                jsonMedium.addProperty("prenom", m.getPresentation());
+                
+                jsonMedium.addProperty("id", m.getId());
+                jsonMedium.addProperty("denomination", m.getDenomination());
+                jsonMedium.addProperty("genre", m.getGenre().toString());
+                jsonMedium.addProperty("presentation", m.getPresentation());
 
                 mediums.add(jsonMedium);
             }
