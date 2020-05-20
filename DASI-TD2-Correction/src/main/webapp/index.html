@@ -1,12 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
     <head>
         <meta charset="UTF-8">
-        <title>TD DASI - Initiation Web</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Accueil - Predict'If Web</title>
+
+        <link rel="stylesheet" href="style.css">
     </head>
+
     <body>
-        <h1>TD DASI - Initiation Web</h1>
-        <p>Ce TD vous intie aux technologies Web. Êtes-vous prêts ?</p>
-        <p><a href="./mediums.html">Aller à la page de Connexion</a></p>
+        <main>
+            <div class="container">
+
+                <div class="title">
+                    <h1>Bienvenue sur Prédict'If Web</h1>
+                </div>
+
+                <div class="left">
+                    <div style="margin-bottom: 1rem; font-size: 1.6rem;">
+                        Rencontrez nos experts diplômés en voyance,
+                        cartomancie, tétrachromatique quantique à flux,
+                        et tant d’autres spécialités !
+                    </div>
+
+                    <img src="https://via.placeholder.com/700x400" alt="">
+                </div>
+
+                <div class="right">
+                    <a href="signup.html" class="button signup">
+                        Inscription gratuite
+                    </a>
+                    <a href="login.html" class="button login">
+                        Connexion
+                    </a>
+                </div>
+
+            </div>
+        </main>
+
+        <style>
+            main {
+                max-width: none;
+            }
+
+            .container {
+                width: 100%;
+                height: 100vh;
+
+                display: grid;
+                grid-template-columns: 10fr 40fr 40fr 10fr;
+                grid-template-rows: 8fr 18fr 10fr;
+                grid-template-areas: "x H H y""x L R y""z z z z";
+            }
+
+            .title,
+            .left,
+            .right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .title {
+                grid-area: H;
+                font-size: calc(0.025 * 100vw);
+            }
+
+            .left {
+                grid-area: L;
+                padding: 1rem;
+                /* justify-content: flex-start; */
+            }
+
+            .right {
+                grid-area: R;
+                /* justify-content: flex-start; */
+            }
+
+            .right .button {
+                text-decoration: none;
+                margin: 1rem auto;
+                font-weight: bold;
+                text-shadow: 0 0 1px white;
+
+                --border-size: 1px;
+                --border-color: var(--button-color);
+                background-color: var(--button-color);
+                color: black;
+            }
+
+            .right .button:hover {
+                --border-size: 5px;
+                background-color: black;
+                color: var(--button-color);
+            }
+
+            .button.signup {
+                --button-color: var(--theme-primary);
+                font-size: 160%;
+            }
+
+            .button.login {
+                --button-color: var(--theme-secondary);
+                font-size: 100%;
+            }
+
+        </style>
     </body>
+
 </html>
