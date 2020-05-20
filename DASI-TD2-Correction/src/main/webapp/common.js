@@ -11,15 +11,19 @@ function createElementFromHTML(html) {
 
 // ------------
 // Fonction pour les requêtes
-function requestApi(url, params = {}) {
-    return fetch(url, {
+function requestApi(params = {}) {
+    const searchParams = Object.keys(params).map((key) => {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+    }).join('&')
+
+    return fetch('./ActionServlet', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        body: JSON.stringify(params)
-    })
+        body: searchParams
+    }).then(x => x.json())
 }
 
 /**

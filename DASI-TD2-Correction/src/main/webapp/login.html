@@ -19,13 +19,13 @@
                 <div class="form__group f-margin-inline">
                     <label for="username">Identifiant utilisateur</label>
                     <input id="username" type="email" autocomplete="username" required
-                        placeholder="Entrez votre adresse e-mail" value="hlamarr@insa-lyon.fr" />
+                        placeholder="Entrez votre adresse e-mail" value="nutella@gmail.com" />
                 </div>
 
                 <div class="form__group f-margin-inline">
                     <label for="password">Mot de passe</label>
                     <input id="password" type="password" autocomplete="current-password" required
-                        placeholder="Entrez votre mot de passe" value="WiFi" />
+                        placeholder="Entrez votre mot de passe" value="Ch0c0-N0isette" />
                 </div>
 
                 <div class="form__group f-margin-inline">
@@ -80,7 +80,7 @@
                     errorText.innerHTML = "" // masquer l'erreur
                     errorText.classList.add('u-hidden')
 
-                    requestApi('./ActionServlet', { todo: 'connecter', username, password })
+                    requestApi({ todo: 'connecter', login: username, password: password })
                         .then(res => {
                             if (res.connexion) {
                                 const p = res.personne
@@ -88,10 +88,10 @@
                                 // redirect to dashboard
                                 switch (p.type) {
                                     case "client":
-                                        window.location.assign("/dashboard-client.html")
+                                        window.location.assign("./dashboard-client.html")
                                         break;
                                     case "employe":
-                                        window.location.assign("/dashboard-employe.html")
+                                        window.location.assign("./dashboard-employe.html")
                                         break;
 
                                     default:
