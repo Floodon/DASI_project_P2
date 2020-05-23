@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inscrivez-vous - Predict'if Web</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <main>
+            <form onsubmit="return submitForm()" id="signup-form" class="form card"
+                style="margin-top: 5vh; max-width: none; width: 100%;">
+                <div class=" form__group">
+                    <h1>Inscrivez-vous</h1>
+                </div>
+
+                <div class="form__row form__group f-margin-inline">
+                    <div class="form__group">
+                        <label for="gender">Genre</label>
+                        <select id="gender" required title="Sélectionnez votre genre">
+                            <option value="X">Autre</option>
+                            <option value="H">Homme</option>
+                            <option value="F">Femme</option>
+                        </select>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="givenName">Prénom</label>
+                        <input id="givenName" type="text" autocomplete="given-name" required
+                            placeholder="Entrez ici votre prénom" />
+                    </div>
+
+                    <div class="form__group">
+                        <label for="familyName">Nom de famille</label>
+                        <input id="familyName" type="text" autocomplete="family-name" required
+                            placeholder="Entrez ici votre nom" />
+                    </div>
+                </div>
+
+                <div class="form__row form__group f-margin-inline">
+                    <div class="form__group">
+                        <label for="tel">Numéro de téléphone</label>
+                        <input id="tel" type="tel" autocomplete="tel" required placeholder="+33 0 00 00 00 00" />
+                    </div>
+
+                    <div class="form__group">
+                        <label for="bday">Date de naissance</label>
+                        <input id="bday" type="date" autocomplete="bday" required />
+                    </div>
+                </div>
+
+                <div class="form__row form__group f-margin-inline">
+                    <div class="form__group">
+                        <label for="email">Adresse e-mail</label>
+                        <input id="email" type="email" autocomplete="email" required placeholder="adresse@email.org" />
+                    </div>
+
+                    <div class="form__group">
+                        <label for="address">Adresse postale</label>
+                        <input id="address" type="text" autocomplete="street-address" required />
+                    </div>
+                </div>
+                <div class="form__row form__group f-margin-inline">
+                    <div class="form__group">
+                        <label for="password">Mot de passe</label>
+                        <input id="password" type="password" autocomplete="new-password" required
+                            placeholder="Entrez votre mot de passe" value="" />
+                    </div>
+
+                    <div class="form__group u-no-flex">
+                        <label>&nbsp;</label>
+                        <input style="width: 10ch" id="show-password" type="button" value="Afficher" />
+                    </div>
+                </div>
+
+                <div class="form__group f-margin-inline">
+                    <input id="submit-form" type="submit" value="Créer un compte" class="button" />
+                </div>
+
+                <div id="error" class="form__group a-blink-once u-hidden" style="text-align: center; color: #f03;">
+                </div>
+
+                <div class="form__group horizontal u-font-smaller">
+                    <div class="u-margin-auto">
+                        Vous n'avez pas de compte ?
+                        <a id="create-account" href="signup.html">Créer un compte</a>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <script src="common.js"></script>
+        <script>
+            const signupForm = document.getElementById('signup-form')
+            const errorText = document.getElementById('error')
+            const loginButton = document.getElementById('submit-form')
+            const showPasswordButton = document.getElementById('show-password')
+
+            const fields = ['gender', 'givenName', 'familyName', 'tel', 'bday', 'email', 'address', 'password']
+            const inputs = {}
+
+            const errorMessages = {
+                empty: "Veuillez remplir tous les champs.",
+                serv: "Une erreur s'est produite lors de la connexion.",
+            }
+
+            function showError(text) {
+                setTimeout(() => {
+                    errorText.innerHTML = text
+                    errorText.classList.remove('u-hidden')
+                }, 200)
+            }
+
+            for (const k of fields) {
+                const input = document.getElementById(k)
+                inputs[k] = input
+                input.addEventListener('input', () => {
+                    errorText.classList.add('u-hidden')
+                })
+            }
+
+            showPasswordButton.addEventListener('click', () => {
+                // si le type du champ 'password' est 'password', alors le mot de passe n'est pas visible
+                const isHidden = (inputs.password.type === 'password')
+                showPasswordButton.value = isHidden ? 'Masquer' : 'Afficher' // attention: le titre du bouton est l'action *future*, pas l'état du bouton
+                inputs.password.type = isHidden ? 'text' : 'password'
+            })
+
+            function submitForm() {
+                const payload = {}
+                for (const k of fields) {
+                    const v = inputs[k].value
+                    payload[k] = v
+                }
+
+                errorText.innerHTML = "" // masquer l'erreur
+                errorText.classList.add('u-hidden')
+                showError(JSON.stringify(payload))
+
+                requestApi({ todo: 'inscription', ...payload })
+                    .then(res => {
+                        if (res.connexion) {
+                            const p = res.personne
+
+                            // redirect to dashboard
+                            window.location.assign("./dashboard-client.html")
+                        } else {
+                            showError(errorMessages.invalid)
+                        }
+                    })
+                    .catch(e => {
+                        console.error("fetch error", e)
+                        showError(errorMessages.serv)
+                    })
+
+                return false // prevent native form submission
+            }
+        </script>
+    </body>
+
+</html>
