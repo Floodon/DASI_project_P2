@@ -77,10 +77,14 @@ main {
 
     --theme-primary: #fd1;
     --theme-secondary: #999;
+
+    line-height: 1.4;
 }
 
 /* Éléments communs */
 input,
+textarea,
+select,
 .button {
     --border-color: grey;
     --border-size: 2px;
@@ -98,18 +102,25 @@ input,
 }
 
 input:hover,
+textarea:hover,
+select:hover,
 .button:hover {
     --border-color: var(--theme-primary);
     --border-size: 2px;
 }
 
 input:active,
+textarea:active,
+select:active,
 .button:active,
 input:focus,
+textarea:focus,
+select:focus,
 .button:focus {
     --border-color: var(--theme-primary);
     --border-size: 4px;
     outline: none;
+    min-width: none;
 }
 
 .button {
@@ -142,6 +153,11 @@ a:active {
 
 .u-margin-auto {
     margin: auto;
+}
+
+.u-no-flex {
+    flex: none !important;
+    width: auto;
 }
 
 .card {
@@ -206,6 +222,19 @@ a:active {
 .form .f-margin-top,
 .form__group + .form__group {
     margin-top: 32px;
+}
+.form__row > .form__group {
+    margin-top: 0px !important;
+    flex: 1;
+}
+.form__row > .form__group:not(:last-child) {
+    margin-right: 32px;
+}
+
+.form__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .form .f-margin-bottom {
