@@ -1,113 +1,308 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Accueil - Predict'If Web</title>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bienvenue sur le site de Prédict'if</title>
 
-        <link rel="stylesheet" href="style.css">
-    </head>
+    <link rel="stylesheet" href="style.css">
 
-    <body>
-        <main>
-            <div class="container">
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: black;
+        scroll-behavior: smooth;
+        overflow: hidden;
+        height: 100%;
+        scroll-snap-type: y mandatory;
+      }
 
-                <div class="title">
-                    <h1>Bienvenue sur Prédict'If Web</h1>
-                </div>
+      body {
+        font-family: Inter;
+        overflow: scroll;
+        height: 100%;
+        overscroll-behavior: none;
+      }
 
-                <div class="left">
-                    <div style="margin-bottom: 1rem; font-size: 1.6rem;">
-                        Rencontrez nos experts diplômés en voyance,
-                        cartomancie, tétrachromatique quantique à flux,
-                        et tant d’autres spécialités !
-                    </div>
+      @keyframes image-loaded {
+        from {
+          filter: blur(64px);
+        }
 
-                    <img src="https://via.placeholder.com/700x400" alt="">
-                </div>
+        to {
+          filter: blur(0px);
+        }
+      }
 
-                <div class="right">
-                    <a href="signup.html" class="button signup">
-                        Inscription gratuite
-                    </a>
-                    <a href="login.html" class="button login">
-                        Connexion
-                    </a>
-                </div>
+      @keyframes page-animation {
+        from {
+          opacity: 0;
+        }
 
-            </div>
-        </main>
+        to {
+          opacity: 1;
+        }
+      }
 
-        <style>
-            main {
-                max-width: none;
-            }
+      #hero {
+        color: white;
+        animation: page-animation 1s ease;
+      }
 
-            .container {
-                width: 100%;
-                height: 100vh;
+      #hero,
+      main {
+        z-index: 4;
+        scroll-snap-align: start;
+      }
 
-                display: grid;
-                grid-template-columns: 10fr 40fr 40fr 10fr;
-                grid-template-rows: 8fr 18fr 10fr;
-                grid-template-areas: "x H H y""x L R y""z z z z";
-            }
+      main {
+        background-color: hsla(0, 0%, 0%, 0.7);
+        box-shadow: 0 0 128px 128px hsla(0, 0%, 0%, 0.7);
+      }
 
-            .title,
-            .left,
-            .right {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
+      #hero,
+      #hero-text {
+        z-index: 2;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-            .title {
-                grid-area: H;
-                font-size: calc(0.025 * 100vw);
-            }
+      #hero div.hero-image {
+        z-index: 1;
+        position: absolute;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+        opacity: 0.4;
+      }
 
-            .left {
-                grid-area: L;
-                padding: 1rem;
-                /* justify-content: flex-start; */
-            }
+      #hero div.hero-image[state="preloaded"] {
+        filter: blur(64px);
+      }
 
-            .right {
-                grid-area: R;
-                /* justify-content: flex-start; */
-            }
+      #hero div.hero-image[state="loaded"] {
+        animation: image-loaded 6s cubic-bezier(.25, .33, 0, .95);
+      }
 
-            .right .button {
-                text-decoration: none;
-                margin: 1rem auto;
-                font-weight: bold;
-                text-shadow: 0 0 1px white;
+      /*
+    #hero div.hero-image:not([loaded]) {
+      visibility: hidden;
+    }
+    #hero div.hero-image[loaded] {
+      animation: image-loaded 1s ease;
+    }
+    */
 
-                --border-size: 1px;
-                --border-color: var(--button-color);
-                background-color: var(--button-color);
-                color: black;
-            }
+      #hero h1 {
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+        margin-top: 25vh;
+        font-size: 80px;
+        font-weight: 700;
+        text-shadow: 0 0 8px black, 0 0 2px black;
+      }
 
-            .right .button:hover {
-                --border-size: 5px;
-                background-color: black;
-                color: var(--button-color);
-            }
+      #hero h2 {
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+        font-size: 36px;
+        font-weight: 600;
+        text-shadow: 0 0 5px black, 0 0 2px black;
 
-            .button.signup {
-                --button-color: var(--theme-primary);
-                font-size: 160%;
-            }
+        margin-top: auto;
+        margin-bottom: 25vh;
+      }
 
-            .button.login {
-                --button-color: var(--theme-secondary);
-                font-size: 100%;
-            }
+      #hero-button {
+        z-index: 2;
+        display: block;
+        appearance: none;
+        border: none;
 
-        </style>
-    </body>
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 1px;
+
+        line-height: 20px;
+        padding: 12px;
+
+        margin-bottom: 20vh;
+
+        background-color: rgba(255, 255, 255, 0.25);
+        color: white;
+        border: 1px solid white;
+        border-radius: calc(20px + 2*12px);
+        box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.05);
+
+        transition: all 250ms ease;
+      }
+
+      #hero-button:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.2);
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="hero">
+      <div class="hero-image" state="none" data-src="hero.jpg" data-src-preview="hero-small.jpg">
+        <script>
+          const heroImageElement = document.querySelector("#hero div.hero-image")
+          const srcFull = heroImageElement.getAttribute("data-src")
+          const srcPreview = heroImageElement.getAttribute("data-src-preview")
+
+          const imgPreview = new Image()
+          imgPreview.src = srcPreview
+          heroImageElement.style.backgroundImage = `url("${srcPreview}")`
+          imgPreview.onload = () => {
+            heroImageElement.setAttribute("state", "preloaded")
+            // heroImageElement.style.backgroundImage = `url("${srcFull}")`
+          }
+
+          const imgFull = new Image()
+          imgFull.src = srcFull
+          imgFull.onload = () => {
+            heroImageElement.setAttribute("state", "loaded")
+            heroImageElement.style.backgroundImage = `url("${srcFull}")`
+          }
+        </script>
+      </div>
+
+      <div id="hero-text">
+        <h1>
+          Reprenez le contrôle de votre vie.
+        </h1>
+
+        <h2>
+          Avec Prédict'if, découvrez ce que révèle votre avenir.
+        </h2>
+
+        <button type="button" id="hero-button">Découvrir maintenant</button>
+      </div>
+      <script>
+        const button = document.getElementById('hero-button')
+        button.addEventListener('click', () => {
+          const main = document.getElementById('main')
+          main.scrollIntoView()
+        })
+      </script>
+    </div>
+
+    <main id="main">
+      <div class="container">
+
+        <div class="title">
+          <h1>Bienvenue sur Prédict'If Web</h1>
+        </div>
+
+        <div class="left">
+          <div style="margin-bottom: 1rem; font-size: 1.6rem;">
+            Rencontrez nos experts diplômés en voyance,
+            cartomancie, tétrachromatique quantique à flux,
+            et tant d’autres spécialités en créant un compte Prédict'if.
+            <br>
+            <br>
+            Nos employés et employées sont disponibles <b>tous les jours et à toute heure</b> pour
+            <b>vous écouter</b> et pour vous fournir les conseils dont vous avez besoin <b>aujourd'hui</b>.
+          </div>
+        </div>
+
+        <div class="right">
+          <a href="signup.html" class="button signup">
+            Inscription gratuite
+          </a>
+          <a href="login.html" class="button login">
+            Connexion
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <style>
+      main {
+        max-width: none;
+      }
+
+      .container {
+        width: 100%;
+        height: 100vh;
+
+        display: grid;
+        grid-template-columns: 10fr 40fr 40fr 10fr;
+        grid-template-rows: 8fr 18fr 10fr;
+        grid-template-areas: "x H H y""x L R y""z z z z";
+      }
+
+      .title,
+      .left,
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title {
+        grid-area: H;
+        font-size: calc(0.025 * 100vw);
+      }
+
+      .left {
+        grid-area: L;
+        padding: 1rem;
+        /* justify-content: flex-start; */
+      }
+
+      .right {
+        grid-area: R;
+        /* justify-content: flex-start; */
+      }
+
+      .right .button {
+        text-decoration: none;
+        margin: 1rem auto;
+        font-weight: bold;
+        text-shadow: 0 0 1px white;
+
+        --border-size: 1px;
+        --border-color: var(--button-color);
+        background-color: var(--button-color);
+        color: black;
+      }
+
+      .right .button:hover {
+        --border-size: 5px;
+        background-color: black;
+        color: var(--button-color);
+      }
+
+      .button.signup {
+        --button-color: var(--theme-primary);
+        font-size: 160%;
+      }
+
+      .button.login {
+        --button-color: var(--theme-secondary);
+        font-size: 100%;
+      }
+
+    </style>
+  </body>
 
 </html>
