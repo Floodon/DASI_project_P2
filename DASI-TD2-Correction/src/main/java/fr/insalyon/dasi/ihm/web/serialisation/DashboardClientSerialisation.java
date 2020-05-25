@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
+import fr.insalyon.dasi.metier.modele.Consultation.ConsultationState;
 import fr.insalyon.dasi.metier.modele.Personne.Genre;
 import fr.insalyon.dasi.metier.modele.ProfilAstral;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class DashboardClientSerialisation extends Serialisation{
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        SimpleDateFormat sdfUniversel = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         
         Boolean connexion = (Boolean) request.getAttribute("connexion");
         
@@ -48,7 +50,7 @@ public class DashboardClientSerialisation extends Serialisation{
                 String genre = client.getGenre() == Genre.HOMME ? "H" : client.getGenre() == Genre.FEMME ? "F" : "X";
                 jsonPersonne.addProperty("genre", genre);
                 jsonPersonne.addProperty("telephone", client.getTelephone());
-                jsonPersonne.addProperty("dateNaissance", sdfUniversel.format(client.getDateNaissance()));
+                jsonPersonne.addProperty("dateNaissance", sdfDateOnly.format(client.getDateNaissance()));
                 jsonPersonne.addProperty("mail", client.getMail());
 
                 container.add("personne", jsonPersonne);
@@ -65,9 +67,13 @@ public class DashboardClientSerialisation extends Serialisation{
                 // Partie "historique des consultations"
                 JsonArray jsonConsultations = new JsonArray();
                 for (Consultation c : client.getConsultations()) {
+                    if (c.getState() != ConsultationState.Terminée) {
+                        continue;
+                    }
+                    
                     JsonObject jsonCons = new JsonObject();
-                    jsonCons.addProperty("dateDebut", sdfUniversel.format(c.getDateDebut()));
-                    jsonCons.addProperty("dateFin", sdfUniversel.format(c.getDateFin()));
+                    jsonCons.addProperty("dateDebut", sdfDateHeure.format(c.getDateDebut()));
+                    jsonCons.addProperty("dateFin", sdfDateHeure.format(c.getDateFin()));
                     
                     JsonObject jsonMedium = new JsonObject();
                     jsonMedium.addProperty("denomination", c.getMedium().getDenomination());
