@@ -3,9 +3,11 @@ package fr.insalyon.dasi.ihm.web;
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierPersonneAction;
+import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumAction;
 import fr.insalyon.dasi.ihm.web.serialisation.MediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.AuthentificationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -55,8 +57,12 @@ public class ActionServlet extends HttpServlet {
                     action = new ListeMediumAction();
                     serialisation = new MediumSerialisation();
                     break;
-                case "...":
+                case "inscription":
+                    action = new InscriptionAction();
+                    serialisation = new InscriptionSerialisation();
                     break;
+                default:
+                    action = null;
             }
         }
         
