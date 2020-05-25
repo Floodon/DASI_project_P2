@@ -112,6 +112,9 @@
                             // /!\ absolument aucune considération de sécurité
                             table.innerHTML += s
                         }
+                    } else {
+                        // utilisateur non connecté
+                        window.location.assign("./login.html")
                     }
                 })
                 .catch(e => {
