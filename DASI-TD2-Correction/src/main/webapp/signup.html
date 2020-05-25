@@ -142,7 +142,7 @@
 
                 requestApi({ todo: 'inscription', ...payload })
                     .then(res => {
-                        if (res.connexion) {
+                        if (!res.erreur) {
                             const p = res.personne
 
                             // redirect to dashboard
