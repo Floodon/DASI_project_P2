@@ -19,8 +19,8 @@
 
                 <div class="form__row form__group f-margin-inline">
                     <div class="form__group">
-                        <label for="gender">Genre</label>
-                        <select id="gender" required title="Sélectionnez votre genre">
+                        <label for="genre">Genre</label>
+                        <select id="genre" required title="Sélectionnez votre genre">
                             <option value="X">Autre</option>
                             <option value="H">Homme</option>
                             <option value="F">Femme</option>
@@ -28,45 +28,45 @@
                     </div>
 
                     <div class="form__group">
-                        <label for="givenName">Prénom</label>
-                        <input id="givenName" type="text" autocomplete="given-name" required
+                        <label for="prenom">Prénom</label>
+                        <input id="prenom" type="text" autocomplete="given-name" required
                             placeholder="Entrez ici votre prénom" />
                     </div>
 
                     <div class="form__group">
-                        <label for="familyName">Nom de famille</label>
-                        <input id="familyName" type="text" autocomplete="family-name" required
+                        <label for="nom">Nom de famille</label>
+                        <input id="nom" type="text" autocomplete="family-name" required
                             placeholder="Entrez ici votre nom" />
                     </div>
                 </div>
 
                 <div class="form__row form__group f-margin-inline">
                     <div class="form__group">
-                        <label for="tel">Numéro de téléphone</label>
-                        <input id="tel" type="tel" autocomplete="tel" required placeholder="+33 0 00 00 00 00" />
+                        <label for="telephone">Numéro de téléphone</label>
+                        <input id="telephone" type="tel" autocomplete="tel" required placeholder="+33 0 00 00 00 00" />
                     </div>
 
                     <div class="form__group">
-                        <label for="bday">Date de naissance</label>
-                        <input id="bday" type="date" autocomplete="bday" required />
+                        <label for="dateNaissance">Date de naissance</label>
+                        <input id="dateNaissance" type="date" autocomplete="bday" required />
                     </div>
                 </div>
 
                 <div class="form__row form__group f-margin-inline">
                     <div class="form__group">
-                        <label for="email">Adresse e-mail</label>
-                        <input id="email" type="email" autocomplete="email" required placeholder="adresse@email.org" />
+                        <label for="mail">Adresse e-mail</label>
+                        <input id="mail" type="email" autocomplete="email" required placeholder="adresse@email.org" />
                     </div>
 
                     <div class="form__group">
-                        <label for="address">Adresse postale</label>
-                        <input id="address" type="text" autocomplete="street-address" required />
+                        <label for="adresse">Adresse postale</label>
+                        <input id="adresse" type="text" autocomplete="street-address" required />
                     </div>
                 </div>
                 <div class="form__row form__group f-margin-inline">
                     <div class="form__group">
-                        <label for="password">Mot de passe</label>
-                        <input id="password" type="password" autocomplete="new-password" required
+                        <label for="motDePasse">Mot de passe</label>
+                        <input id="motDePasse" type="password" autocomplete="new-password" required
                             placeholder="Entrez votre mot de passe" value="" />
                     </div>
 
@@ -99,7 +99,7 @@
             const loginButton = document.getElementById('submit-form')
             const showPasswordButton = document.getElementById('show-password')
 
-            const fields = ['gender', 'givenName', 'familyName', 'tel', 'bday', 'email', 'address', 'password']
+            const fields = ['genre', 'prenom', 'nom', 'telephone', 'dateNaissance', 'mail', 'adresse', 'motDePasse']
             const inputs = {}
 
             const errorMessages = {
@@ -124,9 +124,9 @@
 
             showPasswordButton.addEventListener('click', () => {
                 // si le type du champ 'password' est 'password', alors le mot de passe n'est pas visible
-                const isHidden = (inputs.password.type === 'password')
+                const isHidden = (inputs.motDePasse.type === 'password')
                 showPasswordButton.value = isHidden ? 'Masquer' : 'Afficher' // attention: le titre du bouton est l'action *future*, pas l'état du bouton
-                inputs.password.type = isHidden ? 'text' : 'password'
+                inputs.motDePasse.type = isHidden ? 'text' : 'password'
             })
 
             function submitForm() {
