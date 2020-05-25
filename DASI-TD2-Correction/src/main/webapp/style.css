@@ -79,6 +79,8 @@ main {
     --theme-secondary: #999;
 
     line-height: 1.4;
+
+    --menu-height: 64px;
 }
 
 /* Éléments communs */
@@ -88,7 +90,8 @@ select,
 .input,
 .button,
 .box,
-.text {
+.text,
+nav ul li {
     --bg-color: transparent;
     --border-color: grey;
     --border-size: 2px;
@@ -313,4 +316,42 @@ body > h1 {
     color: black;
     border-radius: 15px;
     padding: 4px 7px;
+}
+
+/* Menu */
+nav {
+    display: block;
+    position: fixed;
+    top: 0;
+    height: var(--menu-height);
+    width: 100%;
+    overflow: hidden scroll;
+    background-color: #111;
+}
+nav ul {
+    height: inherit;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+nav ul li {
+    --border-color: var(--theme-primary);
+    margin-right: 2ch;
+    border-radius: 20px;
+    padding: 4px 10px;
+}
+nav ul li a {
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+body {
+    margin-top: var(--menu-height);
 }

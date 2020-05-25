@@ -17,6 +17,14 @@
             <span data-key="nom"></span>
         </h1>
 
+        <nav>
+            <ul>
+                <li><a href="./dashboard-client.html">Tableau de bord</a></li>
+                <li><a href="./consultation-client.html">Consultation</a></li>
+                <li><a id="logout-button">Déconnexion</a></li>
+            </ul>
+        </nav>
+
         <main class="dashboard">
             <div class="col box" style="max-width: 350px;">
                 <h3>Vos informations</h3>
@@ -112,6 +120,9 @@
                             // /!\ absolument aucune considération de sécurité
                             table.innerHTML += s
                         }
+                    } else {
+                        // utilisateur non connecté
+                        window.location.assign("./login.html")
                     }
                 })
                 .catch(e => {
