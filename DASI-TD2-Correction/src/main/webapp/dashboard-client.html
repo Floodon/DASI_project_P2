@@ -4,70 +4,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inscrivez-vous - Predict'if Web</title>
+        <title>Votre tableau de bord - Predict'if Web</title>
 
         <link rel="stylesheet" href="style.css">
-
-        <style>
-            main {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                max-width: 1000px;
-                font-size: 16px;
-            }
-
-            .col {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                width: auto;
-                margin: 32px auto;
-            }
-
-            .col+.col {
-                margin-left: 16px;
-            }
-
-            .box {
-                padding: 8px;
-            }
-
-            table {
-                text-align: center;
-            }
-
-            .profile-item {
-                margin-bottom: 12px;
-            }
-
-            .profile-item b {
-                text-decoration: underline var(--theme-primary);
-            }
-
-            .profile-item .value {
-                margin-left: auto;
-                background-color: #bbb;
-                color: black;
-                border-radius: 15px;
-                padding: 4px 7px;
-            }
-
-        </style>
     </head>
 
     <body>
-        <main>
+        <h1>
+            Votre tableau de bord
+            –
+            <span data-key="prenom">Chargement...</span>
+            <span data-key="nom"></span>
+        </h1>
+
+        <main class="dashboard">
             <div class="col box" style="max-width: 350px;">
                 <h3>Vos informations</h3>
                 <br>
-                <div class="profile-item">
-                    <b>Nom</b> : <span class="value">
-                        <span data-key="prenom">Chargement...</span>
-                        <span data-key="nom"></span>
-                    </span>
-                </div>
                 <div class="profile-item">
                     <b>Genre</b> : <span class="value" data-key="genre">...</span>
                 </div>
