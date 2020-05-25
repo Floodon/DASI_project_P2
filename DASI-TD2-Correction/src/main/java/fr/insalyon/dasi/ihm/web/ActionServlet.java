@@ -4,11 +4,15 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierPersonneAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardClientAction;
+import fr.insalyon.dasi.ihm.web.action.DashboardEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumAction;
+import fr.insalyon.dasi.ihm.web.serialisation.AucuneSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.MediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.AuthentificationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
@@ -66,6 +70,14 @@ public class ActionServlet extends HttpServlet {
                 case "dashboard-client":
                     action = new DashboardClientAction();
                     serialisation = new DashboardClientSerialisation();
+                    break;
+                case "dashboard-employe":
+                    action = new DashboardEmployeAction();
+                    serialisation = new DashboardEmployeSerialisation();
+                    break;
+                case "deconnexion":
+                    action = new DeconnexionAction();
+                    serialisation = new AucuneSerialisation();
                     break;
                 default:
                     action = null;

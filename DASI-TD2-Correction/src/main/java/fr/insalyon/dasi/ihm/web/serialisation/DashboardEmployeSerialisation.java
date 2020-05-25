@@ -9,11 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
-import fr.insalyon.dasi.metier.modele.Consultation.ConsultationState;
+import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Personne.Genre;
-import fr.insalyon.dasi.metier.modele.ProfilAstral;
 import fr.insalyon.dasi.metier.service.Service;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  */
-public class DashboardClientSerialisation extends Serialisation{
+public class DashboardEmployeSerialisation extends Serialisation{
     
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -41,37 +39,27 @@ public class DashboardClientSerialisation extends Serialisation{
         } else {
             
             if (connexion) {
-                Client client = (Client) request.getAttribute("client");
-                ProfilAstral profil = client != null ? client.getProfilAstral() : null;
+                Employe employe = (Employe) request.getAttribute("employe");
                 
-                if (profil != null) {
+                if (employe != null) {
                     container.addProperty("connexion", connexion);
                 
                     // Partie "infos personnelles"
                     JsonObject jsonPersonne = new JsonObject();
-                    jsonPersonne.addProperty("prenom", client.getPrenom());
-                    jsonPersonne.addProperty("nom", client.getNom());
-                    String genre = client.getGenre() == Genre.HOMME ? "H" : client.getGenre() == Genre.FEMME ? "F" : "X";
+                    jsonPersonne.addProperty("prenom", employe.getPrenom());
+                    jsonPersonne.addProperty("nom", employe.getNom());
+                    String genre = employe.getGenre() == Genre.HOMME ? "H" : employe.getGenre() == Genre.FEMME ? "F" : "X";
                     jsonPersonne.addProperty("genre", genre);
-                    jsonPersonne.addProperty("telephone", client.getTelephone());
-                    jsonPersonne.addProperty("dateNaissance", sdfDateOnly.format(client.getDateNaissance()));
-                    jsonPersonne.addProperty("mail", client.getMail());
+                    jsonPersonne.addProperty("telephone", employe.getTelephone());
+                    jsonPersonne.addProperty("dateNaissance", sdfDateOnly.format(employe.getDateNaissance()));
+                    jsonPersonne.addProperty("mail", employe.getMail());
 
                     container.add("personne", jsonPersonne);
 
-                    // Partie "profil astral"
-                    JsonObject jsonProfil = new JsonObject();
-                    jsonProfil.addProperty("signeChinois", profil.getSigneChinois());
-                    jsonProfil.addProperty("signeZodiaque", profil.getSigneZodiaque());
-                    jsonProfil.addProperty("couleur", profil.getCouleur());
-                    jsonProfil.addProperty("animal", profil.getAnimal());
-
-                    container.add("profilAstral", jsonProfil);
-
                     // Partie "historique des consultations"
                     JsonArray jsonConsultations = new JsonArray();
-                    for (Consultation c : service.listerConsultations(null, client, null, null, null, null)) {
-                        if (c.getState() != ConsultationState.TERMINEE) {
+                    for (Consultation c : service.listerConsultations(employe, null, null, null, null, null)) {
+                        if (c.getState() != Consultation.ConsultationState.TERMINEE) {
                             continue;
                         }
 
@@ -82,8 +70,14 @@ public class DashboardClientSerialisation extends Serialisation{
                         JsonObject jsonMedium = new JsonObject();
                         jsonMedium.addProperty("denomination", c.getMedium().getDenomination());
                         jsonMedium.addProperty("type", c.getMedium().getType());
-
                         jsonCons.add("medium", jsonMedium);
+                        
+                        JsonObject jsonClient = new JsonObject();
+                        jsonClient.addProperty("prenom", c.getClient().getPrenom());
+                        jsonClient.addProperty("nom", c.getClient().getNom());
+                        jsonCons.add("client", jsonClient);
+                        
+                        jsonCons.addProperty("commentaire", c.getCommentaire());
 
                         jsonConsultations.add(jsonCons);
                     }
