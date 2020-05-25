@@ -35,11 +35,7 @@ public class AuthentificationSerialisation extends Serialisation {
             container.add("personne", jsonPersonne);
         }
 
-        response.setContentType("application/json;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-            gson.toJson(container, out);
-        }
+        write(container, response);
     }
 
 }

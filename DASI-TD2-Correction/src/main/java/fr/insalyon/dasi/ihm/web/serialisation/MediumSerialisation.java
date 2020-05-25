@@ -46,10 +46,6 @@ public class MediumSerialisation extends Serialisation {
         Boolean connexion = (liste_mediums != null);
         super_container.addProperty("connexion", connexion);
         
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        gson.toJson(super_container, out);
-        out.close();
+        write(super_container, response);
     }
 }

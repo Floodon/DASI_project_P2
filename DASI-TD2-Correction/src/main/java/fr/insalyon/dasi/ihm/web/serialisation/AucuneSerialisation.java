@@ -23,11 +23,7 @@ public class AucuneSerialisation extends Serialisation {
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject empty = new JsonObject();
         
-        response.setContentType("application/json;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-            gson.toJson(empty, out);
-        }
+        write(empty, response);
     }
     
 }
