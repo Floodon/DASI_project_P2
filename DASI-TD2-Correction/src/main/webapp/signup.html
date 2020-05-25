@@ -138,7 +138,6 @@
 
                 errorText.innerHTML = "" // masquer l'erreur
                 errorText.classList.add('u-hidden')
-                showError(JSON.stringify(payload))
 
                 requestApi({ todo: 'inscription', ...payload })
                     .then(res => {
