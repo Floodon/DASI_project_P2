@@ -83,3 +83,19 @@ const consultationToTrExtended = consult => {
 /** @typedef {{denomination: string, type: string}} Medium */
 /** @typedef {{nom: string, prenom: string}} Client */
 /** @typedef {{dateDebut: string, dateFin: string, medium: Medium, client: Client, commentaire: string}} Consultation */
+
+
+/* Exécuté */
+function logout() {
+    return requestApi({todo: 'deconnexion'})
+        .then(() => {
+            window.location.assign('./login.html')
+        })
+        .catch(e => {
+            console.error('fetch error', e)
+        })
+}
+const logoutButton = document.getElementById('logout-button')
+if (logoutButton) {
+    logoutButton.addEventListener('click', logout)
+}
