@@ -63,19 +63,19 @@
                 <h3>Vos informations</h3>
                 <br>
                 <div class="profile-item">
-                    <b>Prénom et nom</b> : <span class="value">
+                    <b>Nom</b> : <span class="value">
                         <span data-key="prenom">Chargement...</span>
-                        <span data-key="nom">Chargement...</span>
+                        <span data-key="nom"></span>
                     </span>
                 </div>
                 <div class="profile-item">
-                    <b>Genre</b> : <span class="value" data-key="genre">Chargement...</span>
+                    <b>Genre</b> : <span class="value" data-key="genre">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>Téléphone</b> : <span class="value" data-key="telephone">Chargement...</span>
+                    <b>Téléphone</b> : <span class="value" data-key="telephone">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>E-mail</b> : <span class="value" data-key="mail">Chargement...</span>
+                    <b>E-mail</b> : <span class="value" data-key="mail">...</span>
                 </div>
             </div>
 
@@ -83,19 +83,19 @@
                 <h3>Votre profil astral</h3>
                 <br>
                 <div class="profile-item">
-                    <b>Naissance</b> : <span class="value" data-key="dateNaissance">Chargement...</span>
+                    <b>Naissance</b> : <span class="value" data-key="dateNaissance">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>Signe chinois</b> : <span class="value" data-key="signeChinois">Chargement...</span>
+                    <b>Signe chinois</b> : <span class="value" data-key="signeChinois">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>Signe zodiacal</b> : <span class="value" data-key="signeZodiaque">Chargement...</span>
+                    <b>Signe zodiacal</b> : <span class="value" data-key="signeZodiaque">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>Couleur</b> : <span class="value" data-key="couleur">Chargement...</span>
+                    <b>Couleur</b> : <span class="value" data-key="couleur">...</span>
                 </div>
                 <div class="profile-item">
-                    <b>Animal totem</b> : <span class="value" data-key="animal">Chargement...</span>
+                    <b>Animal totem</b> : <span class="value" data-key="animal">...</span>
                 </div>
             </div>
 
@@ -125,35 +125,7 @@
             const fieldsPersonne = ['genre', 'nom', 'prenom', 'telephone', 'dateNaissance', 'mail']
             const fieldsProfilAstral = ['signeChinois', 'signeZodiaque', 'couleur', 'animal']
 
-            Promise.resolve({
-                connexion: true,
-                personne: {
-                    prenom: "Kevin",
-                    nom: "Charton",
-                    genre: "H",
-                    telephone: "0123456789",
-                    dateNaissance: "2020-01-25",
-                    mail: "a@b.com"
-                },
-                profilAstral: {
-                    signeChinois: "Lapin",
-                    signeZodiaque: "Poissons",
-                    couleur: "Rouge",
-                    animal: "Chaton"
-                },
-                historique: [
-                    {
-                        dateDebut: "2020-01-25 09:35",
-                        dateFin: "2020-01-25 10:04",
-                        medium: {
-                            prenom: "Laïssate",
-                            nom: "Rochet",
-                            type: "Cailloumancie"
-                        }
-                    }
-                ]
-            })
-                // requestApi({ todo: 'dashboard-client' })
+            requestApi({ todo: 'dashboard-client' })
                 .then(res => {
                     if (res.connexion) {
                         for (const k of fieldsPersonne) {
