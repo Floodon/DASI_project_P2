@@ -117,7 +117,14 @@
                                     return +el.value
                                 } // sinon retourne undefined
                             })
-                            requestApi({ todo: 'generer-idees', amour, sante, travail })
+                            requestApi({ todo: 'generer-idee', amour, sante, travail })
+                                .then((res) => {
+                                    if (res.textes) {
+                                        const el = document.getElementById('generateur-output')
+                                        el.innerText = res.textes.join(' ')
+                                    }
+                                })
+                                .catch(console.error)
                         })
                     </script>
                 </div>
