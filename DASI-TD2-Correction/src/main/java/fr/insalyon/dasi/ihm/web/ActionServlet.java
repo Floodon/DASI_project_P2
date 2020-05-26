@@ -9,6 +9,7 @@ import fr.insalyon.dasi.ihm.web.action.DashboardClientAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
 import fr.insalyon.dasi.ihm.web.action.DemanderConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.GenererIdeeAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
@@ -19,6 +20,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.ConsultationActuelleSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.GenererIdeeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
@@ -96,6 +98,10 @@ public class ActionServlet extends HttpServlet {
                 case "consultation-actuelle":
                     action = new ConsultationActuelleAction();
                     serialisation = new ConsultationActuelleSerialisation();
+                    break;
+                case "generer-idee":
+                    action = new GenererIdeeAction();
+                    serialisation = new GenererIdeeSerialisation();
                     break;
                 case "deconnexion":
                     action = new DeconnexionAction();
