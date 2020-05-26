@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Consultation (employé) - Predict'if Web</title>
+
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+            .consult-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 2fr 1fr;
+                grid-area: "a b""c d";
+            }
+
+            .consult-grid>* {
+                margin: 32px 16px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <h1 data-key="current-route">Chargement...</h1>
+
+        <nav>
+            <ul>
+                <li><a href="dashboard-employe.html">Tableau de bord</a></li>
+                <li><a href="consultation-employe.html">Consultation</a></li>
+                <li><a id="logout-button">Déconnexion</a></li>
+            </ul>
+        </nav>
+
+        <div id="route-aucune" class="main dashboard route">
+            <div style="font-size: 3rem; font-weight: 200; text-align: center; width: 100%; align-self: center;">
+                Aucune consultation en attente
+            </div>
+        </div>
+
+        <div id="route-consult" class="main dashboard route">
+            <div class="consult-grid" style="flex: 1;">
+                <div class="box" data-key="html-medium">Médium</div>
+                <div class="box" data-key="html-client">Client</div>
+                <div class="box" data-key="html-generateur">Générateur</div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <textarea aria-label="Commentaire" id="commentaire"
+                        placeholder="Entrez ici votre commentaire (jamais affiché au client)..."
+                        style="width: 100%; margin-bottom: 1rem;"></textarea>
+                    <button id="button-start" class="button button--color_green">Débuter la consultation</button>
+                    <button id="button-stop" class="button button--color_red">Terminer la consultation</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="route-chargement" class="main dashboard route">
+            Chargement...
+        </div>
+
+        <script src="common.js"></script>
+        <script>
+            const R_CHARGEMENT = 'chargement'
+            const R_AUCUNE = 'aucune'
+            const R_CONSULT = 'consult'
+            const router = Router([R_CHARGEMENT, R_AUCUNE, R_CONSULT], R_CHARGEMENT, updateRouteName)
+
+            function updateRouteName(route) {
+                const u = s => updatePlaceholder('current-route', s)
+                switch (route) {
+                    case R_CHARGEMENT: u('Chargement...'); break;
+                    case R_AUCUNE: u(''); break;
+                }
+            }
+
+            function clientToDivHtml(client, profilAstral) {
+                return `
+                    <b style="text-align: center; display: block;">Informations client</b>
+                    Nom : ${client.prenom} ${client.nom} <br>
+                    Genre : ${client.genre} <br>
+                    Téléphone : ${client.telephone} <br>
+                    Naissance : ${reformatDateString(client.dateNaissance)} <br>
+                    Signe zodiaque : ${profilAstral.signeZodiaque} <br>
+                    Signe chinois : ${profilAstral.signeChinois} <br>
+                    Couleur : ${profilAstral.couleur} <br>
+                    Animal totem : ${profilAstral.animal}
+                    `
+            }
+            function mediumToDivHtml(medium) {
+                return `
+                    <b style="text-align: center; display: block;">Informations médium</b>
+                    Nom : ${medium.denomination} <br>
+                    Type : ${medium.type} <br>
+                    Présentation : ${medium.presentation}
+                    `
+            }
+
+            // si la consultation est en attente
+            const buttonStart = document.getElementById('button-start')
+            const buttonStop = document.getElementById('button-stop')
+
+            let consultation = null
+            buttonStart.addEventListener('click', () => {
+                requestApi({ todo: 'accepter-consultation' })
+                    .then((res) => {
+                        console.log(res)
+                        updateConsultState({ enAttente: false })
+                    })
+                    .catch(console.error)
+            })
+            buttonStop.addEventListener('click', () => {
+                const comEl = document.getElementById('commentaire')
+                const com = comEl ? comEl.value : ''
+                requestApi({ todo: 'terminer-consultation', commentaire: com })
+                    .then((res) => {
+                        console.log(res)
+                        router.setRoute(R_AUCUNE)
+                    })
+                    .catch(console.error)
+            })
+
+            function routeConsult(consult) {
+                updatePlaceholder('html-medium', mediumToDivHtml(consult.medium), 'innerHTML')
+                updatePlaceholder('html-client', clientToDivHtml(consult.client, consult['profil-astral']), 'innerHTML')
+            }
+
+            function updateConsultState(p) {
+                const estEnAttente = p.enAttente
+                const u = s => updatePlaceholder('current-route', s)
+                if (estEnAttente) {
+                    u('Consultation en attente de votre validation')
+                    buttonStart.removeAttribute('hidden')
+                    buttonStop.setAttribute('hidden', 'hidden')
+                }
+                else {
+                    buttonStart.setAttribute('hidden', 'hidden')
+                    buttonStop.removeAttribute('hidden')
+                    u('Consultation en cours')
+                }
+            }
+
+            requestApi({ todo: 'consultation-actuelle' })
+                .then(res => {
+                    if (res.connexion) {
+                        console.log(res)
+
+                        switch (res.etat) {
+                            case 'en-cours': // consultation en cours
+                            case 'en-attente':
+                                router.setRoute(R_CONSULT)
+                                routeConsult(res.consultation)
+                                updateConsultState({ enAttente: res.etat === 'en-attente' })
+                                break;
+
+                            case 'aucune':
+                            default: // pas de consultation
+                                router.setRoute(R_AUCUNE)
+                                break;
+                        }
+                    } else {
+                        window.location.assign("./login.html")
+                    }
+                })
+                .catch(console.error)
+
+        </script>
+    </body>
+
+</html>

@@ -47,6 +47,13 @@ const reformatDateTimeString = (dts) => {
     return `${p(D)}/${p(M)}/${Y} ${p(h)}h${p(m)}`
 }
 
+const reformatDateString = (ds) => {
+    // ds = date string, 'YYYY-MM-DD' format
+    const [Y, M, D] = ds.split('-')
+    const p = X => (X || '??').padStart('0', 2)
+    return `${p(D)}/${p(M)}/${Y}`
+}
+
 // ------------
 // Transformateurs : Objet --> HTML
 /** @param {Medium} m */

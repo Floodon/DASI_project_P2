@@ -44,9 +44,9 @@
         </div>
 
         <div id="route-en-attente" class="main dashboard route">
-            <div class="col box">
-                La consultation que vous avez demandée débutera bientôt,
-                <span data-key="medium-name">votre correspondant</span> vous contactera par téléphone rapidement.
+            <div class="col box" style="display: block;">
+                La consultation que vous avez demandée débutera bientôt, <span data-key="medium-name">votre
+                    correspondant</span> vous contactera par téléphone rapidement.
             </div>
 
             <div class="col box"
@@ -83,12 +83,13 @@
 
             // fonctions utilitaires
             function updateMedium(medium) {
+                console.log(medium)
                 updatePlaceholder('medium-name', mediumToHtml(medium))
-                updatePlaceholder('medium-desc', medium.presentation)
+                updatePlaceholder('medium-description', medium.presentation)
             }
 
             function findMediumById(mediumId, mediums) {
-                if (select.value === '') {
+                if (mediumId === '') {
                     return null
                 }
 
@@ -108,10 +109,15 @@
                 buttonConsulter.addEventListener('click', () => {
                     const medium = findMediumById(select.value, listeMediums)
                     if (medium !== null) {
-                        requestApi({ todo: 'demande-consultation', id: medium.id })
+                        requestApi({ todo: 'demande-consultation', medium: medium.id })
                             .then(res => {
-                                router.setRoute(R_EN_ATTENTE)
-                                routeEnAttente(medium)
+                                if (res['consultation-ok']) {
+                                    router.setRoute(R_EN_ATTENTE)
+                                    routeEnAttente(medium)
+                                } else {
+                                    alert("Ce voyant n'est actuellement pas disponible")
+                                    console.error("Probablement pas d'employés du bon genre")
+                                }
                             })
                             .catch(console.error)
                     }
@@ -152,8 +158,8 @@
                         switch (res.etat) {
                             case 'en-cours': // consultation en cours
                             case 'en-attente':
-                                router.setRoute(R_EN_COURS)
-                                routeEnCours(medium)
+                                router.setRoute(R_EN_ATTENTE)
+                                routeEnAttente(res.consultation.medium)
                                 break;
 
                             case 'aucune':
@@ -162,6 +168,8 @@
                                 routeDemande()
                                 break;
                         }
+                    } else {
+                        window.location.assign("./login.html")
                     }
                 })
                 .catch(console.error)

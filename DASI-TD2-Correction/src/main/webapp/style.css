@@ -22,7 +22,7 @@ dd {
 }
 
 body {
-    min-height: 100vh;
+    min-height: calc(100vh - 2 * var(--menu-height));
 }
 
 img {
@@ -355,6 +355,7 @@ nav {
     width: 100%;
     overflow: hidden scroll;
     background-color: #111;
+    z-index: 100;
 }
 nav ul {
     height: inherit;
@@ -383,8 +384,10 @@ nav a:hover {
 
 body {
     margin-top: var(--menu-height);
+    margin-bottom: var(--menu-height);
 }
 
-.route[hidden] {
+.route[hidden],
+[hidden] {
     display: none;
 }

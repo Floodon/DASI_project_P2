@@ -19,13 +19,13 @@
                 <div class="form__group f-margin-inline">
                     <label for="username">Identifiant utilisateur</label>
                     <input id="username" type="email" autocomplete="username" required
-                        placeholder="Entrez votre adresse e-mail" value="nutella@gmail.com" />
+                        placeholder="Entrez votre adresse e-mail" value="" />
                 </div>
 
                 <div class="form__group f-margin-inline">
                     <label for="password">Mot de passe</label>
                     <input id="password" type="password" autocomplete="current-password" required
-                        placeholder="Entrez votre mot de passe" value="Ch0c0-N0isette" />
+                        placeholder="Entrez votre mot de passe" value="" />
                 </div>
 
                 <div class="form__group f-margin-inline">
@@ -42,6 +42,17 @@
                     </div>
                 </div>
             </form>
+
+            <div>
+                <br><br>
+                Débug :
+                <a id="a" style="text-decoration: underline">Client</a>
+                <a id="b" style="text-decoration: underline">Employé</a>
+                <script>
+                    a.onclick = () => { username.value = 'mathieu.chappe@insa-lyon.fr', password.value = 'Rrrreeee' }
+                    b.onclick = () => { username.value = 'mangue-passion@gmail.com', password.value = '1_<3_P1N3apple' }
+                </script>
+            </div>
         </main>
 
         <script src="common.js"></script>
