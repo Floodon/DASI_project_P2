@@ -384,3 +384,7 @@ nav a:hover {
 body {
     margin-top: var(--menu-height);
 }
+
+.route[hidden] {
+    display: none;
+}

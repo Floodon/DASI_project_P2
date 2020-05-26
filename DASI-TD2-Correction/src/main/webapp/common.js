@@ -99,3 +99,42 @@ const logoutButton = document.getElementById('logout-button')
 if (logoutButton) {
     logoutButton.addEventListener('click', logout)
 }
+
+
+/**
+ * @param {string[]} routes
+ * @param {string} initialRoute
+ */
+const Router = (routes, initialRoute = '__NONE__', callback = null) => {
+    const getRouteDiv = (r) => document.querySelector('#route-' + r)
+
+    let currentRoute = initialRoute
+    const setRoute = (newRoute) => {
+        console.log(`Router: ${currentRoute} --> ${newRoute}`)
+
+        currentRoute = newRoute
+
+        routes.filter(x => x !== newRoute).forEach(rt => {
+            const el = getRouteDiv(rt)
+            el.setAttribute('hidden')
+        })
+
+        const el = getRouteDiv(newRoute)
+        el.removeAttribute('hidden')
+
+        if (callback) {
+            callback(newRoute, el)
+        }
+    }
+
+    setRoute(initialRoute)
+
+    return { setRoute, getRouteDiv }
+}
+
+function updatePlaceholder(key, value, property = 'innerText') {
+    const els = document.querySelectorAll(`[data-key="${key}"]`)
+    els.forEach(x => {
+        x[property] = value
+    })
+}
