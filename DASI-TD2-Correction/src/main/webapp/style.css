@@ -86,7 +86,7 @@ main,
 }
 
 /* Éléments communs */
-input,
+input:not([type="range"]),
 textarea,
 select,
 .input,
@@ -104,7 +104,7 @@ nav ul li a {
     padding: 4px;
 }
 
-input,
+input:not([type="range"]),
 textarea,
 select,
 .input,
@@ -119,7 +119,7 @@ select,
     transition-property: box-shadow, background;
 }
 
-input:hover,
+input:not([type="range"]):hover,
 textarea:hover,
 select:hover,
 .input:hover,
@@ -128,12 +128,12 @@ select:hover,
     --border-size: 3px;
 }
 
-input:active,
+input:not([type="range"]):active,
 textarea:active,
 select:active,
 .input:active,
 .button:active,
-input:focus,
+input:not([type="range"]):focus,
 textarea:focus,
 select:focus,
 .input:focus,
@@ -163,6 +163,11 @@ select:focus,
 .button--color_red {
     --border-color: #f04 !important;
     --bg-color: #f042 !important;
+    color: white !important;
+}
+.button--color_blue {
+    --border-color: #07f !important;
+    --bg-color: #07f2 !important;
     color: white !important;
 }
 .button[disabled] {
@@ -340,7 +345,8 @@ body > h1 {
 
 .dashboard .profile-item .value {
     margin-left: auto;
-    background-color: #bbb;
+    background-color: #ccc;
+    font-weight: 500;
     color: black;
     border-radius: 15px;
     padding: 4px 7px;

@@ -12,8 +12,7 @@
             .consult-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-template-rows: 2fr 1fr;
-                grid-area: "a b""c d";
+                grid-template-rows: 1fr 1fr;
             }
 
             .consult-grid>* {
@@ -44,11 +43,88 @@
             <div class="consult-grid" style="flex: 1;">
                 <div class="box" data-key="html-medium">Médium</div>
                 <div class="box" data-key="html-client">Client</div>
-                <div class="box" data-key="html-generateur">Générateur</div>
+                <div class="box generateur-idees" data-key="html-generateur">
+                    <div class="generateur-inputs">
+                        <div class="generateur-input-row">
+                            <label for="generateur-amour">Amour</label>
+                            <input type="range" id="generateur-amour" min="1" max="4" step="1" />
+                        </div>
+                        <div class="generateur-input-row">
+                            <label for="generateur-sante">Santé</label>
+                            <input type="range" id="generateur-sante" min="1" max="4" step="1" />
+                        </div>
+                        <div class="generateur-input-row">
+                            <label for="generateur-travail">Travail</label>
+                            <input type="range" id="generateur-travail" min="1" max="4" step="1" />
+                        </div>
+                    </div>
+
+                    <button id="button-generer-idee" class="button button--color_blue">Générer une idée</button>
+
+                    <div class="generateur-output">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Aut autem voluptas ipsam neque dolores, ipsum hic molestiae.
+                        Neque aliquid ipsa, iusto voluptatem accusamus doloremque expedita perspiciatis.
+                    </div>
+
+                    <style>
+                        .generateur-idees {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        .generateur-idees>* {
+                            margin-bottom: 64px;
+                        }
+
+                        .generateur-inputs {
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .generateur-output {
+                            flex: 1;
+                            margin: 8px;
+                            padding: 6px;
+                            border-radius: 5px;
+                            background-color: hsla(213, 99%, 50%, 0.25);
+                        }
+
+                        .generateur-input-row {
+                            display: flex;
+                            flex-direction: row;
+                        }
+
+                        .generateur-input-row label {
+                            font-weight: bold;
+                            width: 7ch;
+                        }
+
+                        .generateur-input-row input {
+                            flex: 1;
+                        }
+
+                    </style>
+                    <script>
+                        const boutonIdees = document.getElementById('button-generer-idee')
+                        boutonIdees.addEventListener('click', () => {
+                            const [amour, sante, travail] = ['amour', 'sante', 'travail'].map(k => {
+                                const el = document.getElementById('generateur-' + k)
+                                if (el) {
+                                    return +el.value
+                                } // sinon retourne undefined
+                            })
+                            requestApi({ todo: 'generer-idees', amour, sante, travail })
+                        })
+                    </script>
+                </div>
                 <div style="display: flex; flex-direction: column; align-items: center;">
                     <textarea aria-label="Commentaire" id="commentaire"
                         placeholder="Entrez ici votre commentaire (jamais affiché au client)..."
-                        style="width: 100%; margin-bottom: 1rem;"></textarea>
+                        style="min-height: 300px; width: 100%; margin-bottom: 1rem; resize: none;"></textarea>
                     <button id="button-start" class="button button--color_green">Débuter la consultation</button>
                     <button id="button-stop" class="button button--color_red">Terminer la consultation</button>
                 </div>
