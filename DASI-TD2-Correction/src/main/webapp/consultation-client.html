@@ -19,7 +19,7 @@
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
         </nav>
-        <div id="route-demande" class="main dashboard route">
+        <div id="route-faire-demande" class="main dashboard route">
             <div class="col" style="max-width: 250px;">
                 <select aria-label="Choisir un médium" id="select-medium">
                     <option value="">Choisir un médium</option>
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div id="chargement" class="main dashboard route">
+        <div id="route-chargement" class="main dashboard route">
             Chargement...
         </div>
 
@@ -87,13 +87,12 @@
                 updatePlaceholder('medium-desc', medium.presentation)
             }
 
-            function findMediumById(id, mediums) {
+            function findMediumById(mediumId, mediums) {
                 if (select.value === '') {
                     return null
                 }
 
-                const id = +select.value
-                const medium = mediums.find(m => m.id === id)
+                const medium = mediums.find(m => m.id === (+mediumId))
                 if (medium) {
                     return medium
                 }

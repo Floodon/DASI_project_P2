@@ -106,9 +106,9 @@ if (logoutButton) {
  * @param {string} initialRoute
  */
 const Router = (routes, initialRoute = '__NONE__', callback = null) => {
-    const getRouteDiv = (r) => document.querySelector('#route-' + r)
+    const getRouteDiv = (r) => document.getElementById('route-' + r)
 
-    let currentRoute = initialRoute
+    let currentRoute = '__NONE__'
     const setRoute = (newRoute) => {
         console.log(`Router: ${currentRoute} --> ${newRoute}`)
 
@@ -116,11 +116,15 @@ const Router = (routes, initialRoute = '__NONE__', callback = null) => {
 
         routes.filter(x => x !== newRoute).forEach(rt => {
             const el = getRouteDiv(rt)
-            el.setAttribute('hidden')
+            if (el) {
+                el.setAttribute('hidden', 'hidden')
+            }
         })
 
         const el = getRouteDiv(newRoute)
-        el.removeAttribute('hidden')
+        if (el) {
+            el.removeAttribute('hidden')
+        }
 
         if (callback) {
             callback(newRoute, el)
@@ -128,6 +132,11 @@ const Router = (routes, initialRoute = '__NONE__', callback = null) => {
     }
 
     setRoute(initialRoute)
+
+    const missingRoutes = routes.filter(rt => !getRouteDiv(rt))
+    if (missingRoutes.length > 0) {
+        console.error('Missing routes:', missingRoutes.join(', '))
+    }
 
     return { setRoute, getRouteDiv }
 }
