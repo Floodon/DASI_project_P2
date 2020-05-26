@@ -6,7 +6,7 @@
 package fr.insalyon.dasi.ihm.web.action;
 
 import fr.insalyon.dasi.metier.modele.Consultation;
-import fr.insalyon.dasi.metier.modele.Employe;
+import fr.insalyon.dasi.metier.modele.Personne;
 import fr.insalyon.dasi.metier.service.Service;
 
 
@@ -22,14 +22,21 @@ public class ConsultationActuelleAction extends Action{
         // Récuperer client
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
-        Employe employe = (id == null) ? null : service.rechercherEmployeParId(id);
+        Personne personne;
+        if (id != null) {
+            personne = service.rechercherEmployeParId(id);
+            personne = (personne != null) ? personne : service.rechercherClientParId(id);
+        } else {
+            personne = null;
+        }
         
-        if (employe == null) {
+        
+        if (personne == null) {
             request.setAttribute("connexion", false);
         } else {
             request.setAttribute("connexion", true);
             
-            Consultation consult = service.obtenirConsultationEnCours(employe);
+            Consultation consult = service.obtenirConsultationEnCours(personne);
             request.setAttribute("consultation", consult);
         }
     }
