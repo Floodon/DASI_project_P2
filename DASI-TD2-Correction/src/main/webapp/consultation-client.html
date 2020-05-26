@@ -69,7 +69,7 @@
 
                 const mediumId = +select.value
 
-                requestApi({ todo: 'demande-consultation', id: mediumId })
+                requestApi({ todo: 'demande-consultation', medium: mediumId })
                     .then(res => {
                     })
                     .catch(e => {
