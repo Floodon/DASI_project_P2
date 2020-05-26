@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Consultation - Predict'if Web</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1>Consultation</h1>
+
+        <nav>
+            <ul>
+                <li><a href="dashboard-client.html">Tableau de bord</a></li>
+                <li><a href="consultation-client.html">Consultation</a></li>
+                <li><a id="logout-button">Déconnexion</a></li>
+            </ul>
+        </nav>
+
+        <div id="route-1" class="main dashboard">
+            <div class="col" style="max-width: 250px;">
+                <select aria-label="Choisir un médium" id="select-medium">
+                    <option value="">Choisir un médium</option>
+                </select>
+            </div>
+
+            <div class="col box"
+                style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="position: absolute; top: 16px; z-index: 10; background-color: #000d; padding: 2px 12px; border-radius: 5px; box-shadow: 0 0 0 2px currentColor"
+                    id="medium-name">
+                    Choisissez un médium
+                </h2>
+                <img id="medium-photo" src="hero.jpg" alt="" style="animation: fade-in 1s ease" />
+                <br>
+                <div id="medium-description">…</div>
+                <br>
+                <button class="button button--color_green u-font-bigger" disabled type="submit" id="consulter-button">
+                    Commencer une consultation
+                </button>
+                <br>
+            </div>
+        </div>
+
+        <!-- <div id="route-2" class="main dashboard">
+        </div>
+
+        <div id="route-3" class="main dashboard">
+        </div> -->
+
+        <script src="common.js"></script>
+        <script>
+            const select = document.getElementById('select-medium')
+            const mediumNameEl = document.getElementById('medium-name')
+            const mediumDescEl = document.getElementById('medium-description')
+            const buttonConsulter = document.getElementById('consulter-button')
+
+            function showMedium(medium) {
+                mediumNameEl.innerText = mediumToHtml(medium)
+                mediumDescEl.innerText = medium.presentation
+            }
+
+            buttonConsulter.addEventListener('click', () => {
+                if (select.value === '') {
+                    return
+                }
+
+                const mediumId = +select.value
+
+                requestApi({ todo: 'demande-consultation', id: mediumId })
+                    .then(res => {
+                    })
+                    .catch(e => {
+                        console.error(e)
+                    })
+            })
+
+            requestApi({ todo: 'liste-mediums' })
+                .then(res => {
+                    if (res.connexion) {
+                        const mediums = res.mediums
+                        mediums.forEach(m => {
+                            const html = `<option value="${m.id}">${m.denomination} (${m.type})</option>`
+                            select.innerHTML += html
+                        })
+                        select.addEventListener('change', () => {
+                            const id = select.value
+                            const medium = mediums.find(m => m.id == id)
+                            if (medium) {
+                                showMedium(medium)
+                                buttonConsulter.removeAttribute('disabled')
+                            }
+                        })
+                    }
+                })
+                .catch(e => {
+                    console.error(e)
+                })
+        </script>
+    </body>
+
+</html>
