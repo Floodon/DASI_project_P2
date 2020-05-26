@@ -20,7 +20,6 @@ public class ConsultationActuelleSerialisation extends Serialisation {
 
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat sdfDateSeule = new SimpleDateFormat("yyyy-MM-dd");
         
         Boolean connexion = (Boolean) request.getAttribute("connexion");
@@ -41,7 +40,6 @@ public class ConsultationActuelleSerialisation extends Serialisation {
                     // * Construction du json de la consultation * //
                     
                     JsonObject jsonConsult = new JsonObject();
-                    jsonConsult.addProperty("dateDebut", sdfDateHeure.format(consult.getDateDebut()));
 
                     // Infos personnelles du client
                     Client client = consult.getClient();
