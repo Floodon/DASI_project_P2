@@ -20,32 +20,33 @@ import java.util.List;
  *
  * @author MrFlo
  */
-public class MediumSerialisation extends Serialisation {
+public class ListeMediumsSerialisation extends Serialisation {
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<Medium> liste_mediums = (List<Medium>)request.getAttribute("liste_mediums");
+        Boolean connexion = (Boolean) request.getAttribute("connexion");
+        List<Medium> listeMediums = (List<Medium>)request.getAttribute("mediums");
         
+        JsonObject container = new JsonObject();
         JsonArray mediums = new JsonArray();
         
-        if (liste_mediums != null) {
-            for (Medium m : liste_mediums) {
+        if (connexion != null && connexion && listeMediums != null) {
+            container.addProperty("connexion", true);
+            for (Medium m : listeMediums) {
                 JsonObject jsonMedium = new JsonObject();
 
                 jsonMedium.addProperty("id", m.getId());
                 jsonMedium.addProperty("denomination", m.getDenomination());
-                jsonMedium.addProperty("genre", m.getGenre().toString());
                 jsonMedium.addProperty("presentation", m.getPresentation());
+                jsonMedium.addProperty("type", m.getType());
 
                 mediums.add(jsonMedium);
             }
+        } else {
+            container.addProperty("connexion", false);
         }
-
-        JsonObject super_container = new JsonObject();
-        super_container.add("liste_mediums", mediums);
         
-        Boolean connexion = (liste_mediums != null);
-        super_container.addProperty("connexion", connexion);
+        container.add("mediums", mediums);
         
-        write(super_container, response);
+        write(container, response);
     }
 }

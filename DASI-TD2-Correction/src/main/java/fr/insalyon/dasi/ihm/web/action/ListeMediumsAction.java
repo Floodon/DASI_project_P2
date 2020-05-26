@@ -12,19 +12,25 @@ import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author MrFlo
- */
-public class ListeMediumAction extends Action{
+public class ListeMediumsAction extends Action{
     
     @Override
     public void executer(HttpServletRequest request) {
-
-       Service service = new Service();
-       List<Medium> mediums = service.listerMediums();
-       request.setAttribute("liste_mediums",mediums);
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("id");
+        
+        if (id == null) {
+            request.setAttribute("connexion", false);
+            return;
+        } else {
+            request.setAttribute("connexion", true);
+        }
+        
+        Service service = new Service();
+        List<Medium> mediums = service.listerMediums();
+        request.setAttribute("mediums",mediums);
        
     }
 }

@@ -1,16 +1,22 @@
 package fr.insalyon.dasi.ihm.web;
 
 import fr.insalyon.dasi.dao.JpaUtil;
+import fr.insalyon.dasi.ihm.web.action.AccepterConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierPersonneAction;
+import fr.insalyon.dasi.ihm.web.action.ConsultationActuelleAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardClientAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
+import fr.insalyon.dasi.ihm.web.action.DemanderConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
-import fr.insalyon.dasi.ihm.web.action.ListeMediumAction;
+import fr.insalyon.dasi.ihm.web.action.ListeMediumsAction;
+import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
 import fr.insalyon.dasi.ihm.web.serialisation.AucuneSerialisation;
-import fr.insalyon.dasi.ihm.web.serialisation.MediumSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.AuthentificationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationActuelleSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
@@ -59,10 +65,6 @@ public class ActionServlet extends HttpServlet {
                     action = new AuthentifierPersonneAction();
                     serialisation = new AuthentificationSerialisation();
                     break;
-                case "lister_mediums":
-                    action = new ListeMediumAction();
-                    serialisation = new MediumSerialisation();
-                    break;
                 case "inscription":
                     action = new InscriptionAction();
                     serialisation = new InscriptionSerialisation();
@@ -75,12 +77,33 @@ public class ActionServlet extends HttpServlet {
                     action = new DashboardEmployeAction();
                     serialisation = new DashboardEmployeSerialisation();
                     break;
+                case "liste-mediums":
+                    action = new ListeMediumsAction();
+                    serialisation = new ListeMediumsSerialisation();
+                    break;
+                case "demande-consultation":
+                    action = new DemanderConsultationAction();
+                    serialisation = new ConsultationSerialisation();
+                    break;
+                case "accepter-consultation":
+                    action = new AccepterConsultationAction();
+                    serialisation = new ConsultationSerialisation();
+                    break;
+                case "terminer-consultation":
+                    action = new TerminerConsultationAction();
+                    serialisation = new ConsultationSerialisation();
+                    break;
+                case "consultation-actuelle":
+                    action = new ConsultationActuelleAction();
+                    serialisation = new ConsultationActuelleSerialisation();
+                    break;
                 case "deconnexion":
                     action = new DeconnexionAction();
                     serialisation = new AucuneSerialisation();
                     break;
                 default:
                     action = null;
+                    break;
             }
         }
         
