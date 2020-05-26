@@ -5,12 +5,9 @@
  */
 package fr.insalyon.dasi.ihm.web.action;
 
-import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
-import fr.insalyon.dasi.metier.modele.Medium;
 import fr.insalyon.dasi.metier.service.Service;
-import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +25,7 @@ public class TerminerConsultationAction extends Action{
         Employe employe = (id == null) ? null : service.rechercherEmployeParId(id);
         
         // Récupérer commentaire
-        String commentaire = (String) request.getAttribute("commentaire");
+        String commentaire = request.getParameter("commentaire");
         
         if (employe == null) {
             request.setAttribute("connexion", false);

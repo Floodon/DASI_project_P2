@@ -26,7 +26,7 @@ public class DemanderConsultationAction extends Action{
         Client client = (id == null) ? null : service.rechercherClientParId(id);
         
         // Recuperer medium
-        Long idMedium = (Long) request.getAttribute("medium");
+        Long idMedium = Long.parseLong(request.getParameter("medium"));
         Medium medium = service.rechercherMediumParId(idMedium);
         
         if (client == null) {

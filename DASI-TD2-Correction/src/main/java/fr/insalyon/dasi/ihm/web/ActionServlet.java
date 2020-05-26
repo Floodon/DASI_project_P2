@@ -79,7 +79,7 @@ public class ActionServlet extends HttpServlet {
                     action = new ListeMediumsAction();
                     serialisation = new ListeMediumsSerialisation();
                     break;
-                case "demander-consultation":
+                case "demande-consultation":
                     action = new DemanderConsultationAction();
                     serialisation = new ConsultationSerialisation();
                     break;
