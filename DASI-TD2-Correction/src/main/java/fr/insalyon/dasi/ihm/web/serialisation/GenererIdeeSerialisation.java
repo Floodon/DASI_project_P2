@@ -40,6 +40,8 @@ public class GenererIdeeSerialisation extends Serialisation {
         } else {
             container.addProperty("connexion", false);
         }
+        
+        write(container, response);
     }
 
 }
