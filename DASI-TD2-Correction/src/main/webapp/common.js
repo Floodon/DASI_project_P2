@@ -99,3 +99,51 @@ const logoutButton = document.getElementById('logout-button')
 if (logoutButton) {
     logoutButton.addEventListener('click', logout)
 }
+
+
+/**
+ * @param {string[]} routes
+ * @param {string} initialRoute
+ */
+const Router = (routes, initialRoute = '__NONE__', callback = null) => {
+    const getRouteDiv = (r) => document.getElementById('route-' + r)
+
+    let currentRoute = '__NONE__'
+    const setRoute = (newRoute) => {
+        console.log(`Router: ${currentRoute} --> ${newRoute}`)
+
+        currentRoute = newRoute
+
+        routes.filter(x => x !== newRoute).forEach(rt => {
+            const el = getRouteDiv(rt)
+            if (el) {
+                el.setAttribute('hidden', 'hidden')
+            }
+        })
+
+        const el = getRouteDiv(newRoute)
+        if (el) {
+            el.removeAttribute('hidden')
+        }
+
+        if (callback) {
+            callback(newRoute, el)
+        }
+    }
+
+    setRoute(initialRoute)
+
+    const missingRoutes = routes.filter(rt => !getRouteDiv(rt))
+    if (missingRoutes.length > 0) {
+        console.error('Missing routes:', missingRoutes.join(', '))
+    }
+
+    return { setRoute, getRouteDiv }
+}
+
+function updatePlaceholder(key, value, property = 'innerText') {
+    const els = document.querySelectorAll(`[data-key="${key}"]`)
+    els.forEach(x => {
+        x[property] = value
+    })
+}

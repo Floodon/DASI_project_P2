@@ -104,7 +104,7 @@
 
             const errorMessages = {
                 empty: "Veuillez remplir tous les champs.",
-                serv: "Une erreur s'est produite lors de la connexion.",
+                serv: "Une erreur s'est produite lors de l'inscription.",
             }
 
             function showError(text) {
@@ -147,7 +147,7 @@
                             // redirect to dashboard
                             window.location.assign("./dashboard-client.html")
                         } else {
-                            showError(errorMessages.invalid)
+                            showError(errorMessages.serv)
                         }
                     })
                     .catch(e => {

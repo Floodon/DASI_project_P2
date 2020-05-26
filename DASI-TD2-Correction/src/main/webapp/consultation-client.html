@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <h1>Consultation</h1>
+        <h1 data-key="current-route">Chargement...</h1>
 
         <nav>
             <ul>
@@ -19,8 +19,7 @@
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
         </nav>
-
-        <div id="route-1" class="main dashboard">
+        <div id="route-faire-demande" class="main dashboard route">
             <div class="col" style="max-width: 250px;">
                 <select aria-label="Choisir un médium" id="select-medium">
                     <option value="">Choisir un médium</option>
@@ -30,12 +29,12 @@
             <div class="col box"
                 style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="position: absolute; top: 16px; z-index: 10; background-color: #000d; padding: 2px 12px; border-radius: 5px; box-shadow: 0 0 0 2px currentColor"
-                    id="medium-name">
+                    data-key="medium-name">
                     Choisissez un médium
                 </h2>
-                <img id="medium-photo" src="hero.jpg" alt="" style="animation: fade-in 1s ease" />
+                <img data-key="medium-photo" src="hero.jpg" alt="" style="animation: fade-in 1s ease" />
                 <br>
-                <div id="medium-description">…</div>
+                <div data-key="medium-description">…</div>
                 <br>
                 <button class="button button--color_green u-font-bigger" disabled type="submit" id="consulter-button">
                     Commencer une consultation
@@ -44,60 +43,129 @@
             </div>
         </div>
 
-        <!-- <div id="route-2" class="main dashboard">
+        <div id="route-en-attente" class="main dashboard route">
+            <div class="col box">
+                La consultation que vous avez demandée débutera bientôt,
+                <span data-key="medium-name">votre correspondant</span> vous contactera par téléphone rapidement.
+            </div>
+
+            <div class="col box"
+                style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="position: absolute; top: 16px; z-index: 10; background-color: #000d; padding: 2px 12px; border-radius: 5px; box-shadow: 0 0 0 2px currentColor"
+                    data-key="medium-name">
+                    …
+                </h2>
+                <img data-key="medium-photo" src="hero.jpg" alt="" style="animation: fade-in 1s ease" />
+                <br>
+                <div data-key="medium-description">…</div>
+            </div>
         </div>
 
-        <div id="route-3" class="main dashboard">
-        </div> -->
+        <div id="route-chargement" class="main dashboard route">
+            Chargement...
+        </div>
 
         <script src="common.js"></script>
         <script>
-            const select = document.getElementById('select-medium')
-            const mediumNameEl = document.getElementById('medium-name')
-            const mediumDescEl = document.getElementById('medium-description')
-            const buttonConsulter = document.getElementById('consulter-button')
+            const R_CHARGEMENT = 'chargement'
+            const R_DEMANDE = 'faire-demande'
+            const R_EN_ATTENTE = 'en-attente'
+            const router = Router([R_DEMANDE, R_EN_ATTENTE, R_CHARGEMENT], R_CHARGEMENT, updateRouteName)
 
-            function showMedium(medium) {
-                mediumNameEl.innerText = mediumToHtml(medium)
-                mediumDescEl.innerText = medium.presentation
+            function updateRouteName(route) {
+                const u = s => updatePlaceholder('current-route', s)
+                switch (route) {
+                    case R_CHARGEMENT: u('Chargement...'); break;
+                    case R_DEMANDE: u('Consulter un médium'); break;
+                    case R_EN_ATTENTE: u('Consultation en attente'); break;
+                }
             }
 
-            buttonConsulter.addEventListener('click', () => {
+            // fonctions utilitaires
+            function updateMedium(medium) {
+                updatePlaceholder('medium-name', mediumToHtml(medium))
+                updatePlaceholder('medium-desc', medium.presentation)
+            }
+
+            function findMediumById(mediumId, mediums) {
                 if (select.value === '') {
-                    return
+                    return null
                 }
 
-                const mediumId = +select.value
+                const medium = mediums.find(m => m.id === (+mediumId))
+                if (medium) {
+                    return medium
+                }
+                return null
+            }
 
-                requestApi({ todo: 'demande-consultation', medium: mediumId })
-                    .then(res => {
-                    })
-                    .catch(e => {
-                        console.error(e)
-                    })
-            })
+            // dans la route de demande de consultation
+            function routeDemande() {
+                const select = document.getElementById('select-medium')
+                const buttonConsulter = document.getElementById('consulter-button')
+                let listeMediums = []
 
-            requestApi({ todo: 'liste-mediums' })
-                .then(res => {
-                    if (res.connexion) {
-                        const mediums = res.mediums
-                        mediums.forEach(m => {
-                            const html = `<option value="${m.id}">${m.denomination} (${m.type})</option>`
-                            select.innerHTML += html
-                        })
-                        select.addEventListener('change', () => {
-                            const id = select.value
-                            const medium = mediums.find(m => m.id == id)
-                            if (medium) {
-                                showMedium(medium)
-                                buttonConsulter.removeAttribute('disabled')
-                            }
-                        })
+                buttonConsulter.addEventListener('click', () => {
+                    const medium = findMediumById(select.value, listeMediums)
+                    if (medium !== null) {
+                        requestApi({ todo: 'demande-consultation', id: medium.id })
+                            .then(res => {
+                                router.setRoute(R_EN_ATTENTE)
+                                routeEnAttente(medium)
+                            })
+                            .catch(console.error)
                     }
                 })
-                .catch(e => {
-                    console.error(e)
+
+                requestApi({ todo: 'liste-mediums' })
+                    .then(res => {
+                        if (res.connexion) {
+                            const mediums = res.mediums
+                            listeMediums = mediums
+
+                            mediums.forEach(m => {
+                                const html = `<option value="${m.id}">${m.denomination} (${m.type})</option>`
+                                select.innerHTML += html
+                            })
+                            select.addEventListener('change', () => {
+                                const medium = findMediumById(select.value, listeMediums)
+                                if (medium !== null) {
+                                    updateMedium(medium)
+                                    buttonConsulter.removeAttribute('disabled')
+                                }
+                            })
+                        }
+                    })
+                    .catch(console.error)
+            }
+
+            // si la consultation est en attente
+            function routeEnAttente(medium) {
+                updateMedium(medium)
+            }
+
+            requestApi({ todo: 'consultation-actuelle' })
+                .then(res => {
+                    if (res.connexion) {
+                        console.log(res)
+
+                        switch (res.etat) {
+                            case 'en-cours': // consultation en cours
+                            case 'en-attente':
+                                router.setRoute(R_EN_COURS)
+                                routeEnCours(medium)
+                                break;
+
+                            case 'aucune':
+                            default: // pas de consultation
+                                router.setRoute(R_DEMANDE)
+                                routeDemande()
+                                break;
+                        }
+                    }
                 })
+                .catch(console.error)
+
         </script>
     </body>
 
