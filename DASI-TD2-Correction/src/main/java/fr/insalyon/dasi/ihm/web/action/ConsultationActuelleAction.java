@@ -13,7 +13,7 @@ import fr.insalyon.dasi.metier.service.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class AccepterConsultationAction extends Action{
+public class ConsultationActuelleAction extends Action{
     
     @Override
     public void executer(HttpServletRequest request) {
@@ -30,8 +30,7 @@ public class AccepterConsultationAction extends Action{
             request.setAttribute("connexion", true);
             
             Consultation consult = service.obtenirConsultationEnCours(employe);
-            boolean consultOK = (consult == null) ? false : service.lancerConsultation(consult);
-            request.setAttribute("consultation-ok", consultOK);
+            request.setAttribute("consultation", consult);
         }
     }
 }

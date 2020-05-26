@@ -4,6 +4,7 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.AccepterConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierPersonneAction;
+import fr.insalyon.dasi.ihm.web.action.ConsultationActuelleAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardClientAction;
 import fr.insalyon.dasi.ihm.web.action.DashboardEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
@@ -14,6 +15,7 @@ import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
 import fr.insalyon.dasi.ihm.web.serialisation.AucuneSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.AuthentificationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationActuelleSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
@@ -91,12 +93,17 @@ public class ActionServlet extends HttpServlet {
                     action = new TerminerConsultationAction();
                     serialisation = new ConsultationSerialisation();
                     break;
+                case "consultation-actuelle":
+                    action = new ConsultationActuelleAction();
+                    serialisation = new ConsultationActuelleSerialisation();
+                    break;
                 case "deconnexion":
                     action = new DeconnexionAction();
                     serialisation = new AucuneSerialisation();
                     break;
                 default:
                     action = null;
+                    break;
             }
         }
         
