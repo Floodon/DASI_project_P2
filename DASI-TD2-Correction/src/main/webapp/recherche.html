@@ -76,7 +76,7 @@
                     .then(res => {
                         if (res.connexion) {
                             let html = ''
-                            const hist = res.historique
+                            const hist = res.historique.reverse()
                             for (const row of hist) {
                                 const champs = [
                                     reformatDateTimeString(row.debut),

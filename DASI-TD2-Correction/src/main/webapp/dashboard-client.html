@@ -121,7 +121,7 @@
                         }
 
                         const table = document.getElementById('consultations')
-                        for (const consult of res.historique) {
+                        for (const consult of res.historique.reverse()) {
                             const s = consultationToTr(consult)
                             // /!\ absolument aucune considération de sécurité
                             table.innerHTML += s
