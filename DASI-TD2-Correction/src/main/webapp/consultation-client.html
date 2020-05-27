@@ -83,7 +83,6 @@
 
             // fonctions utilitaires
             function updateMedium(medium) {
-                console.log(medium)
                 updatePlaceholder('medium-name', mediumToHtml(medium))
                 updatePlaceholder('medium-description', medium.presentation)
             }
@@ -153,8 +152,6 @@
             requestApi({ todo: 'consultation-actuelle' })
                 .then(res => {
                     if (res.connexion) {
-                        console.log(res)
-
                         switch (res.etat) {
                             case 'en-cours': // consultation en cours
                             case 'en-attente':

@@ -12,8 +12,6 @@ function createElementFromHTML(html) {
 // ------------
 // Fonction pour les requêtes
 function requestApi(params = {}) {
-    console.log(params)
-
     const searchParams = Object.keys(params).map((key) => {
         return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
     }).join('&')
@@ -117,8 +115,7 @@ const Router = (routes, initialRoute = '__NONE__', callback = null) => {
 
     let currentRoute = '__NONE__'
     const setRoute = (newRoute) => {
-        console.log(`Router: ${currentRoute} --> ${newRoute}`)
-
+        // console.log(`Router: ${currentRoute} --> ${newRoute}`)
         currentRoute = newRoute
 
         routes.filter(x => x !== newRoute).forEach(rt => {
