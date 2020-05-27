@@ -14,10 +14,10 @@
 
         <nav>
             <ul>
-                <li><a href="./dashboard-employe.html">Tableau de bord</a></li>
-                <li><a href="./consultation-employe.html">Consultation</a></li>
-                <li><a href="./stats.html">Statistiques</a></li>
-                <li><a href="./recherche.html" current>Recherche</a></li>
+                <li><a href="dashboard-employe.html">Tableau de bord</a></li>
+                <li><a href="consultation-employe.html">Consultation</a></li>
+                <li><a href="stats.html">Statistiques</a></li>
+                <li><a href="recherche.html" current>Recherche</a></li>
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
         </nav>
@@ -30,16 +30,16 @@
                         <input id="champ-date" type="date" />
                     </div>
                     <div class="form__group">
+                        <label for="champ-employe">Filtrer par employé·e</label>
+                        <input id="champ-employe" type="text" placeholder="Nom et/ou prénom" />
+                    </div>
+                    <div class="form__group">
                         <label for="champ-medium">Filtrer par médium</label>
-                        <input id="champ-medium" type="text" placeholder="Nom et/ou prénom" />
+                        <input id=" champ-medium" type="text" placeholder="Nom et/ou prénom" list="datalist-mediums" />
                     </div>
                     <div class="form__group">
                         <label for="champ-client">Filtrer par client·e</label>
                         <input id="champ-client" type="text" placeholder="Nom et/ou prénom" />
-                    </div>
-                    <div class="form__group">
-                        <label for="champ-employe">Filtrer par employé·e</label>
-                        <input id="champ-employe" type="text" placeholder="Nom et/ou prénom" />
                     </div>
                 </div>
 
@@ -104,6 +104,15 @@
             }
 
             rechercher() // rechercher dès le chargement de la page
+        </script>
+
+        <datalist id="datalist-mediums">
+            <option>K-Laurie</option>
+            <option>Dr. Igeste</option>
+        </datalist>
+        <script>
+            // Initialiser les datalists
+            // TODO
         </script>
     </body>
 
