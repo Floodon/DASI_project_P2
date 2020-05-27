@@ -5,7 +5,7 @@
  */
 package fr.insalyon.dasi.ihm.web.action;
 
-import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.service.Service;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class ListeMediumsAction extends Action{
+public class ListeClientsAction extends Action{
     
     @Override
     public void executer(HttpServletRequest request) {
@@ -28,8 +28,8 @@ public class ListeMediumsAction extends Action{
         }
         
         Service service = new Service();
-        List<Medium> mediums = service.listerMediums();
-        request.setAttribute("mediums",mediums);
+        List<Client> mediums = service.listerClients();
+        request.setAttribute("clients",mediums);
        
     }
 }

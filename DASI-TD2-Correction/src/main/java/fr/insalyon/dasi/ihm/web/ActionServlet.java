@@ -12,6 +12,8 @@ import fr.insalyon.dasi.ihm.web.action.DemanderConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.GenererIdeeAction;
 import fr.insalyon.dasi.ihm.web.action.HistoriqueConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
+import fr.insalyon.dasi.ihm.web.action.ListeClientsAction;
+import fr.insalyon.dasi.ihm.web.action.ListeEmployesAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.Top5MediumsAction;
@@ -25,6 +27,8 @@ import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GenererIdeeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ListeClientsSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ListeEmployesSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Top5MediumsSerialisation;
 import java.io.IOException;
@@ -35,10 +39,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author DASI Team
- */
 @WebServlet(name = "ActionServlet", urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
 
@@ -86,6 +86,14 @@ public class ActionServlet extends HttpServlet {
                 case "liste-mediums":
                     action = new ListeMediumsAction();
                     serialisation = new ListeMediumsSerialisation();
+                    break;
+                case "liste-employes":
+                    action = new ListeEmployesAction();
+                    serialisation = new ListeEmployesSerialisation();
+                    break;
+                case "liste-clients":
+                    action = new ListeClientsAction();
+                    serialisation = new ListeClientsSerialisation();
                     break;
                 case "top-mediums":
                     action = new Top5MediumsAction();
