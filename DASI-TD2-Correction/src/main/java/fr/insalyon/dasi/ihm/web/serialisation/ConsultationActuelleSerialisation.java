@@ -9,10 +9,8 @@ import com.google.gson.JsonObject;
 import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Medium;
-import fr.insalyon.dasi.metier.modele.Personne;
 import fr.insalyon.dasi.metier.modele.ProfilAstral;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,8 +18,6 @@ public class ConsultationActuelleSerialisation extends Serialisation {
 
     @Override
     protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        SimpleDateFormat sdfDateSeule = new SimpleDateFormat("yyyy-MM-dd");
-        
         Boolean connexion = (Boolean) request.getAttribute("connexion");
         Consultation consult = (Consultation) request.getAttribute("consultation");
         
@@ -43,35 +39,17 @@ public class ConsultationActuelleSerialisation extends Serialisation {
 
                     // Infos personnelles du client
                     Client client = consult.getClient();
-                    JsonObject jsonClient = new JsonObject();
-                    jsonClient.addProperty("prenom", client.getPrenom());
-                    jsonClient.addProperty("nom", client.getNom());
-                    String genre = client.getGenre() == Personne.Genre.HOMME ? "H" : client.getGenre() == Personne.Genre.FEMME ? "F" : "X";
-                    jsonClient.addProperty("genre", genre);
-                    jsonClient.addProperty("telephone", client.getTelephone());
-                    jsonClient.addProperty("dateNaissance", sdfDateSeule.format(client.getDateNaissance()));
-                    jsonClient.addProperty("mail", client.getMail());
-                    
+                    JsonObject jsonClient = serializePersonne(client);
                     jsonConsult.add("client", jsonClient);
                     
                     // Infos sur le profil astral du client
                     ProfilAstral profil = client.getProfilAstral();
-                    JsonObject jsonProfil = new JsonObject();
-                    jsonProfil.addProperty("signeChinois", profil.getSigneChinois());
-                    jsonProfil.addProperty("signeZodiaque", profil.getSigneZodiaque());
-                    jsonProfil.addProperty("couleur", profil.getCouleur());
-                    jsonProfil.addProperty("animal", profil.getAnimal());
-                    
+                    JsonObject jsonProfil = serializeProfilAstral(profil);
                     jsonConsult.add("profil-astral", jsonProfil);
 
                     // Infos sur le medium
                     Medium medium = consult.getMedium();
-                    JsonObject jsonMedium = new JsonObject();
-                    jsonMedium.addProperty("id", medium.getId());
-                    jsonMedium.addProperty("denomination", medium.getDenomination());
-                    jsonMedium.addProperty("type", medium.getType());
-                    jsonMedium.addProperty("presentation", medium.getPresentation());
-                    
+                    JsonObject jsonMedium = serializeMedium(medium);
                     jsonConsult.add("medium", jsonMedium);
                     
                     // Ajout de la consultation au container
