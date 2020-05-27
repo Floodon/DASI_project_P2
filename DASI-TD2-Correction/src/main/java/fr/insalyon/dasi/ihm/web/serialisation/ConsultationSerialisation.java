@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ConsultationSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Boolean connexion = (Boolean) request.getAttribute("connexion");
         Boolean consultOK = (Boolean) request.getAttribute("consultation-ok");
         
@@ -32,7 +32,7 @@ public class ConsultationSerialisation extends Serialisation {
             container.addProperty("connexion", false);
         }
         
-        write(container, response);
+        return container;
     }
     
 }

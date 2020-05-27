@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthentificationSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Personne personne = (Personne) request.getAttribute("personne");
         
@@ -35,7 +35,7 @@ public class AuthentificationSerialisation extends Serialisation {
             container.add("personne", jsonPersonne);
         }
 
-        write(container, response);
+        return container;
     }
 
 }

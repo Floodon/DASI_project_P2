@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AucuneSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject empty = new JsonObject();
         
-        write(empty, response);
+        return empty;
     }
     
 }

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DashboardEmployeSerialisation extends Serialisation{
     
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Service service = new Service();
         
         SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
@@ -90,7 +90,7 @@ public class DashboardEmployeSerialisation extends Serialisation{
             }
         }
         
-        write(container, response);
+        return container;
     }
     
 }

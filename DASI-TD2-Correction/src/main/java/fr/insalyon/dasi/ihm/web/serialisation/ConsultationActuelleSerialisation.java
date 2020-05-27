@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ConsultationActuelleSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SimpleDateFormat sdfDateSeule = new SimpleDateFormat("yyyy-MM-dd");
         
         Boolean connexion = (Boolean) request.getAttribute("connexion");
@@ -84,7 +84,7 @@ public class ConsultationActuelleSerialisation extends Serialisation {
             container.addProperty("connexion", false);
         }
         
-        write(container, response);
+        return container;
     }
     
 }

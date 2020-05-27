@@ -21,8 +21,9 @@ import java.util.List;
  * @author MrFlo
  */
 public class ListeMediumsSerialisation extends Serialisation {
+    
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Boolean connexion = (Boolean) request.getAttribute("connexion");
         List<Medium> listeMediums = (List<Medium>)request.getAttribute("mediums");
         
@@ -47,6 +48,6 @@ public class ListeMediumsSerialisation extends Serialisation {
         
         container.add("mediums", mediums);
         
-        write(container, response);
+        return container;
     }
 }

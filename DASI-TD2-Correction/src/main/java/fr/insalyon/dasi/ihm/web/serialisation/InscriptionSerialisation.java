@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InscriptionSerialisation extends Serialisation{
     
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Boolean erreur = (Boolean) request.getAttribute("erreur");
         
@@ -30,7 +30,7 @@ public class InscriptionSerialisation extends Serialisation{
             container.addProperty("erreur", erreur);
         }
         
-        write(container, response);
+        return container;
     }
     
 }

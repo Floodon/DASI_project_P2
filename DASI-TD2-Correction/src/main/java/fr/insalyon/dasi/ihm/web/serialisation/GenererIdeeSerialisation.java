@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GenererIdeeSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Boolean connexion = (Boolean) request.getAttribute("connexion");
         Client client = (Client) request.getAttribute("client");
         Integer amour = (Integer) request.getAttribute("amour");
@@ -41,7 +41,7 @@ public class GenererIdeeSerialisation extends Serialisation {
             container.addProperty("connexion", false);
         }
         
-        write(container, response);
+        return container;
     }
 
 }

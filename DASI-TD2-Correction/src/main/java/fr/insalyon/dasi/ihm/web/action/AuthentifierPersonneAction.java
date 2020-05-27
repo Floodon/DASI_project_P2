@@ -1,6 +1,5 @@
 package fr.insalyon.dasi.ihm.web.action;
 
-import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Personne;
 import fr.insalyon.dasi.metier.service.Service;
 import javax.servlet.http.HttpServletRequest;

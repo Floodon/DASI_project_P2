@@ -14,9 +14,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class Serialisation {
     
-    public abstract void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JsonObject toWrite = createJson(request, response);
+        write(toWrite, response);
+    }
     
-    protected void write(JsonObject object, HttpServletResponse response) throws IOException {
+    protected abstract JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    
+    private void write(JsonObject object, HttpServletResponse response) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
