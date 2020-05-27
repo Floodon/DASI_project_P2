@@ -33,8 +33,8 @@ public class HistoriqueConsultationSerialisation extends Serialisation {
             if (historique != null) {
                 historique.stream().map(c -> {
                     JsonObject jsonCons = new JsonObject();
-                    jsonCons.addProperty("debut", sdfDateOnly.format(c.getDateDebut()));
-                    jsonCons.addProperty("fin", sdfDateOnly.format(c.getDateFin()));
+                    jsonCons.addProperty("debut", sdfDateHeure.format(c.getDateDebut()));
+                    jsonCons.addProperty("fin", sdfDateHeure.format(c.getDateFin()));
                     jsonCons.addProperty("employe", c.getEmploye().getNom() + " " + c.getEmploye().getPrenom());
                     jsonCons.addProperty("client", c.getClient().getNom() + " " + c.getClient().getPrenom());
                     jsonCons.addProperty("medium", c.getMedium().getDenomination() + " (" + c.getMedium().getType() + ")");
