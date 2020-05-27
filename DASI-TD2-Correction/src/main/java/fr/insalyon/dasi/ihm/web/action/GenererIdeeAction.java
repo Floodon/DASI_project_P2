@@ -20,7 +20,7 @@ public class GenererIdeeAction extends Action{
     public void executer(HttpServletRequest request) {
         Service service = new Service();
         
-        // Récuperer client
+        // Récuperer employé
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
         Employe employe = (id == null) ? null : service.rechercherEmployeParId(id);

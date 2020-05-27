@@ -13,6 +13,7 @@ import fr.insalyon.dasi.ihm.web.action.GenererIdeeAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.Top5MediumsAction;
 import fr.insalyon.dasi.ihm.web.serialisation.AucuneSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListeMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.AuthentificationSerialisation;
@@ -23,6 +24,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GenererIdeeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.Top5MediumsSerialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -82,6 +84,10 @@ public class ActionServlet extends HttpServlet {
                 case "liste-mediums":
                     action = new ListeMediumsAction();
                     serialisation = new ListeMediumsSerialisation();
+                    break;
+                case "top-mediums":
+                    action = new Top5MediumsAction();
+                    serialisation = new Top5MediumsSerialisation();
                     break;
                 case "demande-consultation":
                     action = new DemanderConsultationAction();
