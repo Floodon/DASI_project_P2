@@ -42,7 +42,7 @@ public class DashboardEmployeSerialisation extends Serialisation{
 
                     // Partie "historique des consultations"
                     JsonArray jsonConsultations = new JsonArray();
-                    for (Consultation c : service.listerConsultations(employe, null, null, null, null, null)) {
+                    for (Consultation c : service.listerConsultations(employe, null, null)) {
                         if (c.getState() != Consultation.ConsultationState.TERMINEE) {
                             continue;
                         }

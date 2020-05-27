@@ -35,8 +35,8 @@ public abstract class Serialisation {
     
     /* DateFormat souvent utilisés */
     
-        protected static final SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
-        protected static final SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        public static final SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        public static final SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     
     /* Sérialisations souvent utilisées */
     
