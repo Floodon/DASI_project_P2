@@ -37,7 +37,7 @@ public class ListeClientsSerialisation extends Serialisation {
             container.addProperty("connexion", false);
         }
         
-        container.add("mediums", clients);
+        container.add("clients", clients);
         
         return container;
     }

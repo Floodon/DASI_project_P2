@@ -38,7 +38,7 @@ public class ListeEmployesSerialisation extends Serialisation {
             container.addProperty("connexion", false);
         }
         
-        container.add("mediums", employes);
+        container.add("employes", employes);
         
         return container;
     }
