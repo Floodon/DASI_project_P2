@@ -5,10 +5,6 @@ import fr.insalyon.dasi.metier.service.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author DASI Team
- */
 public class AuthentifierPersonneAction extends Action {
 
     @Override

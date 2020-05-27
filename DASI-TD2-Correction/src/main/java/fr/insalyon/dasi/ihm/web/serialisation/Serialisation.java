@@ -12,10 +12,6 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author DASI Team
- */
 public abstract class Serialisation {
     
     public final void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -35,8 +31,8 @@ public abstract class Serialisation {
     
     /* DateFormat souvent utilisés */
     
-        public static final SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
-        public static final SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static final SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat sdfDateHeure = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     
     /* Sérialisations souvent utilisées */
     

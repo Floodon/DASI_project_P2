@@ -1,34 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fr.insalyon.dasi.ihm.web.serialisation;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Client;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ListeMediumsSerialisation extends Serialisation {
+/**
+ *
+ * @author MrFlo
+ */
+public class ListeClientsSerialisation extends Serialisation {
     
     @Override
     protected JsonObject createJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Boolean connexion = (Boolean) request.getAttribute("connexion");
-        List<Medium> listeMediums = (List<Medium>)request.getAttribute("mediums");
+        List<Client> listeClients = (List<Client>)request.getAttribute("clients");
         
         JsonObject container = new JsonObject();
-        JsonArray mediums = new JsonArray();
+        JsonArray clients = new JsonArray();
         
-        if (connexion != null && connexion && listeMediums != null) {
+        if (connexion != null && connexion && listeClients != null) {
             container.addProperty("connexion", true);
-            for (Medium m : listeMediums) {
-                JsonObject jsonMedium = serializeMedium(m);
-                mediums.add(jsonMedium);
+            for (Client c : listeClients) {
+                JsonObject jsonMedium = serializePersonne(c);
+                clients.add(jsonMedium);
             }
         } else {
             container.addProperty("connexion", false);
         }
         
-        container.add("mediums", mediums);
+        container.add("mediums", clients);
         
         return container;
     }
