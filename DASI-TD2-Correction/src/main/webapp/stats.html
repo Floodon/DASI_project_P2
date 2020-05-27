@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="employe">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Statistiques - Predict'if Web</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1>Médiums les plus performants</h1>
+
+        <nav>
+            <ul>
+                <li><a href="./dashboard-employe.html">Tableau de bord</a></li>
+                <li><a href="./consultation-employe.html">Consultation</a></li>
+                <li><a href="./stats.html" current>Statistiques</a></li>
+                <li><a href="./recherche.html">Recherche</a></li>
+                <li><a id="logout-button">Déconnexion</a></li>
+            </ul>
+        </nav>
+
+        <main class="dashboard">
+            <table class="table-wide">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Nom du médium</th>
+                        <th>Nombre de consultations</th>
+                    </tr>
+                </thead>
+                <tbody id="top-mediums">
+
+                </tbody>
+            </table>
+        </main>
+
+        <script src="common.js"></script>
+        <script>
+            requestApi({ todo: 'top-mediums' })
+                .then(res => {
+                    if (res.connexion) {
+                        const table = document.getElementById('top-mediums')
+                        const mediums = res.top
+                        for (let i = 0; i < mediums.length; i++) {
+                            const medium = mediums[i]
+
+                            const champs = [
+                                prettyIndex(i),
+                                mediumToHtml(medium),
+                                medium.nConsultations,
+                            ]
+
+                            table.innerHTML += tr(champs.map(td).join(''))
+                        }
+                    } else {
+                        // utilisateur non connecté
+                        window.location.assign("./login.html")
+                    }
+                })
+                .catch(e => {
+                    console.error("fetch error", e)
+                })
+        </script>
+    </body>
+
+</html>

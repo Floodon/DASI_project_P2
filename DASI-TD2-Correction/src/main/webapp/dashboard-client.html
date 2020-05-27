@@ -19,7 +19,7 @@
 
         <nav>
             <ul>
-                <li><a href="./dashboard-client.html">Tableau de bord</a></li>
+                <li><a href="./dashboard-client.html" current>Tableau de bord</a></li>
                 <li><a href="./consultation-client.html">Consultation</a></li>
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
@@ -64,12 +64,18 @@
                 <div class="box" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                     <h3>Historique de consultation</h3>
                     <br>
-                    <table border="1" id="consultations">
-                        <tr>
-                            <th>Début</th>
-                            <th>Fin</th>
-                            <th>Médium</th>
-                        </tr>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Médium</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="consultations">
+
+                        </tbody>
                     </table>
                 </div>
                 <br>
@@ -114,7 +120,7 @@
                             else console.error(`champ manquant dans la réponse: profilAstral.${k}`)
                         }
 
-                        const table = document.querySelector(`table#consultations`)
+                        const table = document.getElementById('consultations')
                         for (const consult of res.historique) {
                             const s = consultationToTr(consult)
                             // /!\ absolument aucune considération de sécurité

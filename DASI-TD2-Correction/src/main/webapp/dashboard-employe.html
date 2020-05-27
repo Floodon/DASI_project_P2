@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="employe">
 
     <head>
         <meta charset="UTF-8">
@@ -19,8 +19,10 @@
 
         <nav>
             <ul>
-                <li><a href="./dashboard-employe.html">Tableau de bord</a></li>
+                <li><a href="./dashboard-employe.html" current>Tableau de bord</a></li>
                 <li><a href="./consultation-employe.html">Consultation</a></li>
+                <li><a href="./stats.html">Statistiques</a></li>
+                <li><a href="./recherche.html">Recherche</a></li>
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
         </nav>
@@ -46,14 +48,18 @@
             <div class="col box" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h3>Historique de consultation</h3>
                 <br>
-                <table border="1" id="consultations">
-                    <tr>
+                <table>
+                    <thead>
                         <th>Début</th>
                         <th>Fin</th>
                         <th>Médium</th>
                         <th>Client</th>
                         <th>Commentaire</th>
-                    </tr>
+                    </thead>
+
+                    <tbody id="consultations">
+
+                    </tbody>
                 </table>
             </div>
         </main>
@@ -84,7 +90,7 @@
                             else console.error(`champ manquant dans la réponse: personne.${k}`)
                         }
 
-                        const table = document.querySelector(`table#consultations`)
+                        const table = document.getElementById('consultations')
                         for (const consult of res.historique) {
                             const s = consultationToTrExtended(consult)
                             // /!\ absolument aucune considération de sécurité

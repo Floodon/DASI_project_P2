@@ -10,7 +10,12 @@
     </head>
 
     <body>
-        <main>
+        <a id="go-to-homepage" href="index.html">
+            <img src="logo.png" alt="Retourner à l'accueil">
+            Retourner à l'accueil
+        </a>
+
+        <main style="max-width: 800px;">
             <form onsubmit="return submitForm()" id="signup-form" class="form card"
                 style="margin-top: 5vh; max-width: none; width: 100%;">
                 <div class=" form__group">
@@ -60,14 +65,15 @@
 
                     <div class="form__group">
                         <label for="adresse">Adresse postale</label>
-                        <input id="adresse" type="text" autocomplete="street-address" required />
+                        <input id="adresse" type="text" autocomplete="street-address" required
+                            placeholder="Votre adresse" />
                     </div>
                 </div>
                 <div class="form__row form__group f-margin-inline">
                     <div class="form__group">
                         <label for="motDePasse">Mot de passe</label>
                         <input id="motDePasse" type="password" autocomplete="new-password" required
-                            placeholder="Entrez votre mot de passe" value="" />
+                            placeholder="Entrez votre mot de passe" />
                     </div>
 
                     <div class="form__group u-no-flex">
@@ -90,6 +96,24 @@
                     </div>
                 </div>
             </form>
+
+            <div>
+                <br><br>
+                Débug :
+                <a id="z" style="text-decoration: underline">Client 2</a>
+                <script>
+                    z.onclick = () => {
+                        genre.value = 'H'
+                        prenom.value = 'Kevin'
+                        nom.value = 'Charton'
+                        telephone.value = '06 12 34 56 78'
+                        dateNaissance.value = '1999-03-27'
+                        mail.value = 'kev@caramail.com'
+                        adresse.value = '42 rue des Fleurs, Paris'
+                        motDePasse.value = 'jesuiskevin'
+                    }
+                </script>
+            </div>
         </main>
 
         <script src="common.js"></script>

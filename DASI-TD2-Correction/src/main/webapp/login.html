@@ -10,6 +10,11 @@
     </head>
 
     <body>
+        <a id="go-to-homepage" href="index.html">
+            <img src="logo.png" alt="Retourner à l'accueil">
+            Retourner à l'accueil
+        </a>
+
         <main>
             <form onsubmit="return submitForm()" id="login-form" class="form card" style="margin-top: 10vh">
                 <div class="form__group">
@@ -19,13 +24,13 @@
                 <div class="form__group f-margin-inline">
                     <label for="username">Identifiant utilisateur</label>
                     <input id="username" type="email" autocomplete="username" required
-                        placeholder="Entrez votre adresse e-mail" value="" />
+                        placeholder="Entrez votre adresse e-mail" />
                 </div>
 
                 <div class="form__group f-margin-inline">
                     <label for="password">Mot de passe</label>
                     <input id="password" type="password" autocomplete="current-password" required
-                        placeholder="Entrez votre mot de passe" value="" />
+                        placeholder="Entrez votre mot de passe" />
                 </div>
 
                 <div class="form__group f-margin-inline">
@@ -46,11 +51,13 @@
             <div>
                 <br><br>
                 Débug :
-                <a id="a" style="text-decoration: underline">Client</a>
-                <a id="b" style="text-decoration: underline">Employé</a>
+                <a id="a" style="text-decoration: underline">Client 1</a>
+                <a id="b" style="text-decoration: underline">Client 2</a>
+                <a id="c" style="text-decoration: underline">Employé</a>
                 <script>
                     a.onclick = () => { username.value = 'mathieu.chappe@insa-lyon.fr', password.value = 'Rrrreeee' }
-                    b.onclick = () => { username.value = 'mangue-passion@gmail.com', password.value = '1_<3_P1N3apple' }
+                    b.onclick = () => { username.value = 'kev@caramail.com', password.value = 'jesuiskevin' }
+                    c.onclick = () => { username.value = 'mangue-passion@gmail.com', password.value = '1_<3_P1N3apple' }
                 </script>
             </div>
         </main>

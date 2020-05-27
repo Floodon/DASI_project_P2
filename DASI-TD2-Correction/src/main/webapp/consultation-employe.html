@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="employe">
 
     <head>
         <meta charset="UTF-8">
@@ -28,7 +28,9 @@
         <nav>
             <ul>
                 <li><a href="dashboard-employe.html">Tableau de bord</a></li>
-                <li><a href="consultation-employe.html">Consultation</a></li>
+                <li><a href="consultation-employe.html" current>Consultation</a></li>
+                <li><a href="./stats.html">Statistiques</a></li>
+                <li><a href="./recherche.html">Recherche</a></li>
                 <li><a id="logout-button">Déconnexion</a></li>
             </ul>
         </nav>
@@ -61,10 +63,8 @@
 
                     <button id="button-generer-idee" class="button button--color_blue">Générer une idée</button>
 
-                    <div class="generateur-output">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Aut autem voluptas ipsam neque dolores, ipsum hic molestiae.
-                        Neque aliquid ipsa, iusto voluptatem accusamus doloremque expedita perspiciatis.
+                    <div class="generateur-output" id="generateur-output">
+                        Cliquez sur le bouton pour générer une idée
                     </div>
 
                     <style>
@@ -76,21 +76,26 @@
                         }
 
                         .generateur-idees>* {
-                            margin-bottom: 64px;
+                            margin-bottom: 8px;
                         }
 
                         .generateur-inputs {
-                            flex: 1;
+                            width: 100%;
                             display: flex;
                             flex-direction: column;
                         }
 
                         .generateur-output {
-                            flex: 1;
+                            width: 100%;
+                            flex-shrink: 0;
+                            flex-grow: 0;
                             margin: 8px;
                             padding: 6px;
                             border-radius: 5px;
                             background-color: hsla(213, 99%, 50%, 0.25);
+
+                            height: 100px;
+                            overflow: scroll;
                         }
 
                         .generateur-input-row {
@@ -131,7 +136,7 @@
                 <div style="display: flex; flex-direction: column; align-items: center;">
                     <textarea aria-label="Commentaire" id="commentaire"
                         placeholder="Entrez ici votre commentaire (jamais affiché au client)..."
-                        style="min-height: 300px; width: 100%; margin-bottom: 1rem; resize: none;"></textarea>
+                        style="width: 100%; margin-bottom: 1rem; resize: none;"></textarea>
                     <button id="button-start" class="button button--color_green">Débuter la consultation</button>
                     <button id="button-stop" class="button button--color_red">Terminer la consultation</button>
                 </div>
@@ -187,7 +192,6 @@
             buttonStart.addEventListener('click', () => {
                 requestApi({ todo: 'accepter-consultation' })
                     .then((res) => {
-                        console.log(res)
                         updateConsultState({ enAttente: false })
                     })
                     .catch(console.error)
@@ -197,7 +201,6 @@
                 const com = comEl ? comEl.value : ''
                 requestApi({ todo: 'terminer-consultation', commentaire: com })
                     .then((res) => {
-                        console.log(res)
                         router.setRoute(R_AUCUNE)
                     })
                     .catch(console.error)
@@ -226,8 +229,6 @@
             requestApi({ todo: 'consultation-actuelle' })
                 .then(res => {
                     if (res.connexion) {
-                        console.log(res)
-
                         switch (res.etat) {
                             case 'en-cours': // consultation en cours
                             case 'en-attente':

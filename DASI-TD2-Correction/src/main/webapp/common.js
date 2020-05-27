@@ -154,3 +154,17 @@ function updatePlaceholder(key, value, property = 'innerText') {
         x[property] = value
     })
 }
+
+function prettyIndex(index) {
+    const i = index + 1
+
+    if (i === 1) {
+        return '1er 🏆'
+    } else if (i === 2) {
+        return '2e 🥈'
+    } else if (i === 3) {
+        return '3e 🥉'
+    }
+
+    return i.toString() + 'e'
+}

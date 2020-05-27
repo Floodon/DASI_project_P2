@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="employe">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recherche de consultations - Predict'if Web</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1>Recherche</h1>
+
+        <nav>
+            <ul>
+                <li><a href="./dashboard-employe.html">Tableau de bord</a></li>
+                <li><a href="./consultation-employe.html">Consultation</a></li>
+                <li><a href="./stats.html">Statistiques</a></li>
+                <li><a href="./recherche.html" current>Recherche</a></li>
+                <li><a id="logout-button">Déconnexion</a></li>
+            </ul>
+        </nav>
+
+        <main class="dashboard" style="display: block;">
+            <form onsubmit="return rechercher()" class="form box" style="max-width: none;">
+                <div class="form__group horizontal" style="justify-content: space-between;">
+                    <div class="form__group">
+                        <label for="champ-date">Filtrer par date</label>
+                        <input id="champ-date" type="date" />
+                    </div>
+                    <div class="form__group">
+                        <label for="champ-medium">Filtrer par médium</label>
+                        <input id="champ-medium" type="text" placeholder="Nom et/ou prénom" />
+                    </div>
+                    <div class="form__group">
+                        <label for="champ-client">Filtrer par client·e</label>
+                        <input id="champ-client" type="text" placeholder="Nom et/ou prénom" />
+                    </div>
+                    <div class="form__group">
+                        <label for="champ-employe">Filtrer par employé·e</label>
+                        <input id="champ-employe" type="text" placeholder="Nom et/ou prénom" />
+                    </div>
+                </div>
+
+                <div class="form__group">
+                    <input type="submit" value="Lancer la recherche" class="button button--color_blue" />
+                </div>
+            </form>
+
+            <table class="table-wide">
+                <thead>
+                    <tr>
+                        <th>Début</th>
+                        <th>Fin</th>
+                        <th>Employé·e</th>
+                        <th>Médium</th>
+                        <th>Client·e</th>
+                        <th>Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody id="resultats-recherche">
+
+                </tbody>
+            </table>
+        </main>
+
+        <script src="common.js"></script>
+        <script>
+            function rechercher() {
+                const champs = ['date', 'client', 'medium', 'employe']
+                const els = champs.map(x => document.getElementById('champ-' + x))
+                const [date, clientName, mediumName, employeName] = els.map(x => x.value)
+
+                requestApi({ todo: 'recherche', date, clientName, mediumName, employeName })
+                    .then(res => {
+                        if (res.connexion) {
+                            let html = ''
+                            const hist = res.historique
+                            for (const row of hist) {
+                                const champs = [
+                                    reformatDateTimeString(row.debut),
+                                    reformatDateTimeString(row.fin),
+                                    row.employe,
+                                    row.medium,
+                                    row.client,
+                                    row.commentaire,
+                                ]
+
+                                html += tr(champs.map(td).join(''))
+                            }
+
+                            const table = document.getElementById('resultats-recherche')
+                            table.innerHTML = html
+                        } else {
+                            window.location.assign("./login.html")
+                        }
+                    })
+                    .catch(e => {
+                        console.error("fetch error", e)
+                    })
+
+                return false // prevent native form submission
+            }
+        </script>
+    </body>
+
+</html>
