@@ -10,6 +10,7 @@ import fr.insalyon.dasi.ihm.web.action.DashboardEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
 import fr.insalyon.dasi.ihm.web.action.DemanderConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.GenererIdeeAction;
+import fr.insalyon.dasi.ihm.web.action.HistoriqueConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.InscriptionAction;
 import fr.insalyon.dasi.ihm.web.action.ListeMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
@@ -22,6 +23,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.ConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DashboardEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GenererIdeeSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscriptionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Top5MediumsSerialisation;
@@ -88,6 +90,10 @@ public class ActionServlet extends HttpServlet {
                 case "top-mediums":
                     action = new Top5MediumsAction();
                     serialisation = new Top5MediumsSerialisation();
+                    break;
+                case "recherche":
+                    action = new HistoriqueConsultationAction();
+                    serialisation = new HistoriqueConsultationSerialisation();
                     break;
                 case "demande-consultation":
                     action = new DemanderConsultationAction();
