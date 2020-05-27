@@ -126,7 +126,7 @@
                     .then(res => {
                         if (res.connexion) {
                             const mediums = res.mediums
-                            listeMediums = mediums
+                            listeMediums = mediums // global
 
                             mediums.forEach(m => {
                                 const html = `<option value="${m.id}">${m.denomination} (${m.type})</option>`

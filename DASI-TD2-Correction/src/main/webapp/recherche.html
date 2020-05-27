@@ -106,13 +106,28 @@
             rechercher() // rechercher dès le chargement de la page
         </script>
 
-        <datalist id="datalist-mediums">
-            <option>K-Laurie</option>
-            <option>Dr. Igeste</option>
-        </datalist>
+        <datalist id="datalist-mediums"></datalist>
+        <datalist id="datalist-clients"></datalist>
+        <datalist id="datalist-employes"></datalist>
+
         <script>
             // Initialiser les datalists
-            // TODO
+            const option = (name) => `<option value="${name}">${name}</option>`
+
+            function initDatalist(key, toString) {
+                requestApi({ todo: `liste-${key}` })
+                    .then(res => {
+                        if (res.connexion) {
+                            const dl = document.getElementById(`datalist-${key}`)
+                            dl.innerHTML = res[key].map(toString).map(option).join('\n')
+                        }
+                    })
+                    .catch(console.error)
+            }
+
+            initDatalist('mediums', m => m.denomination)
+            initDatalist('clients', m => m.prenom + ' ' + m.nom)
+            initDatalist('employes', m => m.prenom + ' ' + m.nom)
         </script>
     </body>
 
